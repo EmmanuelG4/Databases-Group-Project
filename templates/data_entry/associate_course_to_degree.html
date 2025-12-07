@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}Associate Course to Degree{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Assign Course to Degree (Requires/Core Status)</h2>
+    <p>This links a course to a degree program and determines if it is a core requirement.</p>
+    
+    <form method="POST" action="{{ url_for('data_entry.associate_course_to_degree') }}">
+        
+        <div class="form-group">
+            <label for="degree_select">Select Degree:</label>
+            <select id="degree_select" name="degree_select_combined" required>
+                <option value="">-- Select Degree --</option>
+                {% for degree in degrees %}
+                <option value="{{ degree.degree_name }}|{{ degree.degree_level }}">
+                    {{ degree.degree_name }} ({{ degree.degree_level }})
+                </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" id="degree_name_hidden" name="degree_name" required>
+            <input type="hidden" id="degree_level_hidden" name="degree_level" required>
+        </div>
+
+        <div class="form-group">
+            <label for="course_select">Select Course:</label>
+            <select id="course_select" name="course_num" required>
+                <option value="">-- Select Course --</option>
+                {% for course in courses %}
+                <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <input type="checkbox" id="is_core" name="is_core">
+            <label for="is_core">Designate as **Core Course** for this Degree?</label>
+            <small>If checked, this course can be associated with learning objectives.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Assign Course to Degree</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('degree_select').addEventListener('change', function() {
+        const selectedValue = this.value;
+        if (selectedValue) {
+            const [name, level] = selectedValue.split('|');
+            document.getElementById('degree_name_hidden').value = name;
+            document.getElementById('degree_level_hidden').value = level;
+        } else {
+            document.getElementById('degree_name_hidden').value = '';
+            document.getElementById('degree_level_hidden').value = '';
+        }
+    });
+    // Initialize hidden fields on load if an option is pre-selected (though not common)
+    document.getElementById('degree_select').dispatchEvent(new Event('change'));
+</script>
+{% endblock %}

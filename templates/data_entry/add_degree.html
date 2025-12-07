@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Degree{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Enter New Degree Information</h2>
+    
+    <form method="POST" action="{{ url_for('data_entry.add_degree') }}">
+        
+        <div class="form-group">
+            <label for="degree_name">Degree Name (e.g., Computer Science):</label>
+            <input type="text" id="degree_name" name="degree_name" required maxlength="30" placeholder="e.g., Computer Science">
+        </div>
+
+        <div class="form-group">
+            <label for="degree_level">Degree Level:</label>
+            <select id="degree_level" name="degree_level" required>
+                <option value="">-- Select Level --</option>
+                <option value="BA">BA</option>
+                <option value="BS">BS</option>
+                <option value="MS">MS</option>
+                <option value="Ph.D.">Ph.D.</option>
+                <option value="Cert">Cert</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Degree</button>
+    </form>
+</div>
+{% endblock %}

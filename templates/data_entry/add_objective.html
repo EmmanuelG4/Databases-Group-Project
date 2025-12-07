@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Learning Objective{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Enter New Learning Objective</h2>
+    
+    <form method="POST" action="{{ url_for('data_entry.add_objective') }}">
+        
+        <div class="form-group">
+            <label for="obj_code">Objective Code (Required):</label>
+            <input 
+                type="text" 
+                id="obj_code" 
+                name="obj_code" 
+                required 
+                maxlength="8" 
+                placeholder="e.g., LO-A1">
+            <small>A unique code associated with the objective.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title (Required):</label>
+            <input 
+                type="text" 
+                id="title" 
+                name="title" 
+                required 
+                maxlength="120" 
+                placeholder="e.g., Demonstrate Database Normalization">
+            <small>A unique title (120 characters maximum).</small>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea 
+                id="description" 
+                name="description" 
+                rows="4" 
+                placeholder="Provide a detailed description of what the student should be able to do."></textarea>
+            <small>Text with arbitrary length.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Objective</button>
+    </form>
+</div>
+{% endblock %}

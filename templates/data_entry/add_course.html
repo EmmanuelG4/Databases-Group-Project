@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Course{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Enter New Course Information</h2>
+    
+    <form method="POST" action="{{ url_for('data_entry.add_course') }}">
+        
+        <div class="form-group">
+            <label for="course_num">Course Number (Required):</label>
+            <input 
+                type="text" 
+                id="course_num" 
+                name="course_num" 
+                required 
+                maxlength="8" 
+                placeholder="e.g., CS5330">
+            [cite_start]<small>A unique course number (e.g., a 2-4 letter department code + a four-digit number). [cite: 12]</small>
+        </div>
+
+        <div class="form-group">
+            <label for="course_name">Course Name (Required):</label>
+            <input 
+                type="text" 
+                id="course_name" 
+                name="course_name" 
+                required 
+                maxlength="60" 
+                placeholder="e.g., Advanced Database Systems">
+            [cite_start]<small>A unique name for the course. [cite: 12]</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Course</button>
+    </form>
+</div>
+{% endblock %}

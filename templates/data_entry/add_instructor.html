@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Instructor{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Enter New Instructor Information</h2>
+    
+    <form method="POST" action="{{ url_for('data_entry.add_instructor') }}">
+        
+        <div class="form-group">
+            <label for="instructor_id">Instructor ID (Required):</label>
+            <input 
+                type="text" 
+                id="instructor_id" 
+                name="instructor_id" 
+                required 
+                maxlength="8" 
+                placeholder="e.g., I1234567">
+            <small>A unique ID for the instructor (e.g., an 8-character string).</small>
+        </div>
+
+        <div class="form-group">
+            <label for="instructor_name">Instructor Name (Required):</label>
+            <input 
+                type="text" 
+                id="instructor_name" 
+                name="instructor_name" 
+                required 
+                maxlength="50" 
+                placeholder="e.g., Dr. Alice Smith">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Instructor</button>
+    </form>
+</div>
+{% endblock %}

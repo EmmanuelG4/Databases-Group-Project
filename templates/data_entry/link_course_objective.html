@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}Link Core Course to Objective{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Associate Core Course with Learning Objective</h2>
+    <p>This links an objective to a course that is designated as 'core' for a specific degree. Both the course and objective must exist.</p>
+    
+    <form method="POST" action="{{ url_for('data_entry.link_course_objective') }}">
+        
+        <div class="form-group">
+            <label for="degree_select">Select Degree (Required):</label>
+            <select id="degree_select" name="degree_select_combined" required>
+                <option value="">-- Select Degree --</option>
+                {% for degree in degrees %}
+                <option value="{{ degree.degree_name }}|{{ degree.degree_level }}">
+                    {{ degree.degree_name }} ({{ degree.degree_level }})
+                </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" id="degree_name_hidden" name="degree_name" required>
+            <input type="hidden" id="degree_level_hidden" name="degree_level" required>
+            <small>The objective link is specific to this degree program.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="course_select">Select Course (Required):</label>
+            <select id="course_select" name="course_num" required>
+                <option value="">-- Select Core Course --</option>
+                {% for course in courses %}
+                <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
+                {% endfor %}
+            </select>
+            <small>Must be a course designated as **CORE** for the selected degree.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="objective_select">Select Learning Objective (Required):</label>
+            <select id="objective_select" name="obj_code" required>
+                <option value="">-- Select Objective --</option>
+                {% for objective in objectives %}
+                <option value="{{ objective.obj_code }}">{{ objective.obj_code }} - {{ objective.title }}</option>
+                {% endfor %}
+            </select>
+            <small>Each core course must be associated with at least one objective.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Link Objective to Course</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('degree_select').addEventListener('change', function() {
+        const selectedValue = this.value;
+        if (selectedValue) {
+            const [name, level] = selectedValue.split('|');
+            document.getElementById('degree_name_hidden').value = name;
+            document.getElementById('degree_level_hidden').value = level;
+        } else {
+            document.getElementById('degree_name_hidden').value = '';
+            document.getElementById('degree_level_hidden').value = '';
+        }
+    });
+    // Initialize hidden fields on load 
+    document.getElementById('degree_select').dispatchEvent(new Event('change'));
+</script>
+{% endblock %}
