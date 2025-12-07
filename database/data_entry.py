@@ -1,8 +1,6 @@
 from db import get_connection
 
-# ------------------------
-# ADD DEGREE
-# ------------------------
+
 def add_degree():
     name = input("Degree name (e.g., Computer Science): ")
     level = input("Level (BA, BS, MS, PhD, Cert): ")
@@ -21,9 +19,7 @@ def add_degree():
     print("Degree added.\n")
 
 
-# ------------------------
-# ADD COURSE
-# ------------------------
+
 def add_course():
     course_num = input("Course number (e.g., CSE2340): ")
     course_name = input("Course name/title: ")
@@ -42,9 +38,7 @@ def add_course():
     print("Course added.\n")
 
 
-# ------------------------
-# ADD INSTRUCTOR
-# ------------------------
+
 def add_instructor():
     instr_id = input("Instructor ID (string, e.g. INST001): ")
     instr_name = input("Instructor name: ")
@@ -63,9 +57,6 @@ def add_instructor():
     print("Instructor added.\n")
 
 
-# ------------------------
-# ADD SECTION
-# ------------------------
 def add_section():
     sec_num = input("Section number (e.g., 001): ")
     num_students = int(input("Number of students: "))
@@ -89,9 +80,7 @@ def add_section():
     print("Section added.\n")
 
 
-# ------------------------
-# ADD LEARNING OBJECTIVE
-# ------------------------
+
 def add_objective():
     obj_code = input("Objective code (e.g., LO1): ")
     title = input("Title (<=120 chars): ")
@@ -112,9 +101,6 @@ def add_objective():
     print("Learning objective added.\n")
 
 
-# ------------------------
-# LINK DEGREE + COURSE + OBJECTIVE (ASSOCIATED)
-# ------------------------
 def link_course_objective():
     degree_name = input("Degree name: ")
     degree_level = input("Degree level (BA/BS/MS/etc.): ")
