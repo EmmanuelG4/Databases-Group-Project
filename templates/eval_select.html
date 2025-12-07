@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Evaluations</title>
+</head>
+<body>
+    <h1>Program Evaluation Entry</h1>
+    
+    <form action="/evaluation/enter" method="GET">
+        
+        <h3>1. Select Degree</h3>
+        <select name="degree" required>
+            <option value="">-- Select Degree --</option>
+            {% for d in degrees %}
+            <option value="{{ d.degree_name }}|{{ d.degree_level }}">
+                {{ d.degree_name }} ({{ d.degree_level }})
+            </option>
+            {% endfor %}
+        </select>
+
+        <h3>2. Select Instructor</h3>
+        <select name="instructor_id" required>
+            <option value="">-- Select Instructor --</option>
+            {% for i in instructors %}
+            <option value="{{ i.instructor_id }}">{{ i.instructor_name }}</option>
+            {% endfor %}
+        </select>
+
+        <h3>3. Select Semester</h3>
+        <select name="sec_term" required>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+        </select>
+        
+        <input type="number" name="sec_year" placeholder="Year (e.g., 2025)" required>
+
+        <br><br>
+        <button type="submit">Find Sections</button>
+    </form>
+</body>
+</html>

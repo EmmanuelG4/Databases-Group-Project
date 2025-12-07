@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter Grades</title>
+    <style>
+        .section-box { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; }
+        .obj-box { background-color: #f9f9f9; padding: 10px; margin-top: 10px; border-left: 4px solid #007bff; }
+        label { display: block; margin-top: 5px; }
+        .status-saved { color: green; font-weight: bold; }
+        .status-missing { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Evaluations for {{ degree_name }} ({{ degree_level }})</h1>
+    <p>Instructor: {{ instructor_id }} | Semester: {{ sec_term }} {{ sec_year }}</p>
+
+    <form action="/evaluation/save" method="POST">
+        
+        <input type="hidden" name="degree_name" value="{{ degree_name }}">
+        <input type="hidden" name="degree_level" value="{{ degree_level }}">
+        <input type="hidden" name="instructor_id" value="{{ instructor_id }}">
+        <input type="hidden" name="sec_term" value="{{ sec_term }}">
+        <input type="hidden" name="sec_year" value="{{ sec_year }}">
+
+        {% if not sections_data %}
+            <h3>No sections found for this instructor in this semester.</h3>
+        {% endif %}
+
+        {% for item in sections_data %}
+        <div class="section-box">
+            <h2>Course: {{ item.meta.course_num }} - {{ item.meta.course_name }}</h2>
+            <h3>Section: {{ item.meta.sec_num }}</h3>
+
+            {% if not item.objectives %}
+                <p>No learning objectives associated with this course for this degree.</p>
+            {% else %}
+                
+                {% for obj_item in item.objectives %}
+                <div class="obj-box">
+                    <h4>Objective: {{ obj_item.info.title }} ({{ obj_item.info.obj_code }})</h4>
+                    <p><em>{{ obj_item.info.description }}</em></p>
+
+                    {% if obj_item.eval %}
+                        <p class="status-saved">Status: Data Entered</p>
+                    {% else %}
+                        <p class="status-missing">Status: Not Entered</p>
+                    {% endif %}
+
+                    {% set prefix = item.meta.course_num + '|' + item.meta.sec_num + '|' + obj_item.info.obj_code %}
+
+                    <label>Evaluation Method (e.g., Quiz, Final):</label>
+                    <input type="text" name="{{ prefix }}|based_on" 
+                           value="{{ obj_item.eval.based_on if obj_item.eval else '' }}" required>
+
+                    <label>Count of A:</label>
+                    <input type="number" name="{{ prefix }}|perform_a" 
+                           value="{{ obj_item.eval.perform_a if obj_item.eval else 0 }}" min="0" required>
+
+                    <label>Count of B:</label>
+                    <input type="number" name="{{ prefix }}|perform_b" 
+                           value="{{ obj_item.eval.perform_b if obj_item.eval else 0 }}"  min="0" required>
+
+                    <label>Count of C:</label>
+                    <input type="number" name="{{ prefix }}|perform_c" 
+                           value="{{ obj_item.eval.perform_c if obj_item.eval else 0 }}" min="0" required>
+
+                    <label>Count of F:</label>
+                    <input type="number" name="{{ prefix }}|perform_f" 
+                           value="{{ obj_item.eval.perform_f if obj_item.eval else 0 }}" min="0" required>
+
+                    <label>Improvement Suggestions (Optional):</label>
+                    <textarea name="{{ prefix }}|improvements" rows="3" cols="50">{{ obj_item.eval.improvements if obj_item.eval else '' }}</textarea>
+                </div>
+                {% endfor %}
+
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        {% if sections_data %}
+            <button type="submit" style="font-size: 18px; padding: 10px;">Save Evaluations</button>
+        {% endif %}
+    </form>
+</body>
+</html>
