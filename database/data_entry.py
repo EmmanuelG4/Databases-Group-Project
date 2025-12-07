@@ -122,9 +122,6 @@ def link_course_objective():
     print("Objective linked to course.\n")
 
 
-# ------------------------
-# MAIN MENU
-# ------------------------
 def main_menu():
     while True:
         print("=== Data Entry Menu ===")
