@@ -1,5 +1,5 @@
-create database db_grouproj;
-use db_grouproj;
+CREATE DATABASE dbprog;
+USE dbprog;
 
 CREATE TABLE degree (
 	degree_name VARCHAR(30),
