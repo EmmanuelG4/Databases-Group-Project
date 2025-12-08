@@ -2,8 +2,28 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    background: #bcd0e8;   /* blue background */
     color: #cc0033; /* ALL TEXT RED */
+    position: relative;
+    
+    /* Background image */
+    background-image: url('/static/images/campus-beauty.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Semi-transparent overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(188, 208, 232, 0.85); /* Blue with 85% opacity */
+    z-index: -1;
+    pointer-events: none; /* Allows clicking through the overlay */
 }
 
 main {
