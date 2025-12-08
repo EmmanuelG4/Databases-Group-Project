@@ -247,14 +247,14 @@ def add_section():
 def link_course_objective():
     """
     Insert rows into associated(degree_name, degree_level, course_num, obj_code),
-    but only if the course is CORE for that degree in requires.
+    as long as the course is linked to that degree in requires (core or non-core).
     """
     degrees = execute_query("SELECT degree_name, degree_level FROM degree ORDER BY degree_name")
+    # Now include ALL courses that appear in requires (core or non-core)
     courses = execute_query("""
         SELECT R.course_num, C.course_name 
         FROM requires R
         JOIN course C ON R.course_num = C.course_num
-        WHERE R.core = TRUE
         GROUP BY R.course_num, C.course_name 
         ORDER BY R.course_num
     """)
@@ -268,7 +268,7 @@ def link_course_objective():
             obj_code = request.form['obj_code']
 
             if not degree_name or not degree_level or not course_num or not obj_code:
-                flash('Please pick a degree, a core course, and a learning objective.', 'error')
+                flash('Please pick a degree, a course, and a learning objective.', 'error')
                 return render_template(
                     'data_entry/link_course_objective.html',
                     degrees=degrees,
@@ -276,7 +276,8 @@ def link_course_objective():
                     objectives=objectives
                 )
 
-            core_row = execute_query(
+            # Check that this course is actually assigned to the degree in requires
+            req_row = execute_query(
                 """
                 SELECT core 
                 FROM requires
@@ -289,10 +290,10 @@ def link_course_objective():
                 fetch_one=True
             )
 
-            if not core_row:
+            if not req_row:
                 flash(
-                    'This course is not linked to that degree yet, or it is not set up as CORE. '
-                    'First use "Assign Course to Degree" and check the core box.',
+                    'This course is not linked to that degree yet. '
+                    'First use "Assign Course to Degree".',
                     'error'
                 )
                 return render_template(
@@ -302,18 +303,7 @@ def link_course_objective():
                     objectives=objectives
                 )
 
-            if not core_row.get('core', False):
-                flash(
-                    'This course is not marked as a CORE course for that degree, '
-                    'so it can’t be linked to an objective.',
-                    'error'
-                )
-                return render_template(
-                    'data_entry/link_course_objective.html',
-                    degrees=degrees,
-                    courses=courses,
-                    objectives=objectives
-                )
+            # No longer require core = TRUE; non-core is allowed.
 
             data = {
                 'degree_name': degree_name,
@@ -323,7 +313,7 @@ def link_course_objective():
             }
             insert_data('associated', data)
             flash(
-                f'Objective {obj_code} linked to core course {course_num} '
+                f'Objective {obj_code} linked to course {course_num} '
                 f'for {degree_name} {degree_level}.',
                 'success'
             )
