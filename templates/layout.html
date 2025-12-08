@@ -10,10 +10,16 @@
     <header>
         <nav class="navbar">
             <a href="{{ url_for('index') }}" class="logo">Program Evaluation</a>
-            <div class="nav-links">
-                <a href="{{ url_for('data_entry.entry_menu') }}">Data Entry</a>
-                <a href="{{ url_for('evaluation.select_evaluation') }}">Evaluation</a>
-                <a href="{{ url_for('querying.query_menu') }}">Reports</a>
+
+            <div class="nav-links dropdown">
+                <button class="dropdown-toggle" type="button">
+                    Menu ▾
+                </button>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('data_entry.entry_menu') }}">Data Entry</a>
+                    <a href="{{ url_for('evaluation.select_evaluation') }}">Evaluation</a>
+                    <a href="{{ url_for('querying.query_menu') }}">Reports</a>
+                </div>
             </div>
         </nav>
     </header>
@@ -23,9 +29,9 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <ul class="flashes">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
                     </ul>
                 {% endif %}
             {% endwith %}
