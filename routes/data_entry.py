@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from database.db_handler import execute_query, insert_data
+from database.handler import execute_query, insert_data
 
 data_entry_bp = Blueprint('data_entry', __name__, url_prefix='/entry', template_folder='../templates')
 

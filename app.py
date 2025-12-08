@@ -27,9 +27,9 @@ def create_app():
         print(f"Error reading config file: {e}")
         exit(1)
 
-    app.register_blueprint(data_entry_bp, url_prefix='/entry')
-    app.register_blueprint(evaluation_bp, url_prefix='/evaluation')
-    app.register_blueprint(querying_bp, url_prefix='/query')
+    app.register_blueprint(data_entry_bp)
+    app.register_blueprint(evaluation_bp)
+    app.register_blueprint(querying_bp)
 
     @app.route('/')
     def index():

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from database.db_handler import execute_query
+from database.handler import execute_query
 
 # Create the blueprint object
 querying_bp = Blueprint('querying', __name__, url_prefix='/query', template_folder='../templates')
