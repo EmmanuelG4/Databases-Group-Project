@@ -6,49 +6,110 @@
 <div class="container">
     <h2>Welcome to the Program Evaluation System</h2>
     
-    <p>This site helps keep track of degree programs, courses, instructors, and evaluations. You can enter data, submit evaluations, and run reports to see how everything connects.</p>
+    <p>
+        This site helps keep track of degree programs, courses, instructors, and evaluations.
+        You can enter data, submit evaluations, and run reports to see how everything connects.
+    </p>
     
-    <div class="menu-sections">
-        <section class="card">
-            <h3>📝 Data Entry & Setup</h3>
-            <p>Use these forms to add the basics—degrees, courses, instructors, learning objectives, and course-to-degree links.</p>
-            <a href="{{ url_for('data_entry.entry_menu') }}" class="btn btn-primary">Go to Data Entry</a>
+    <div class="circle-menu">
+        
+        <section class="circle-card">
+            <h3>Data Entry & Setup</h3>
+            <p>
+                Use these forms to add the basics—degrees, courses, instructors,
+                learning objectives, and course-to-degree links.
+            </p>
+            <a href="{{ url_for('data_entry.entry_menu') }}" class="circle-link">
+                Go to Data Entry
+            </a>
         </section>
 
-        <section class="card">
-            <h3>👩‍🏫 Evaluation Submission</h3>
-            <p>Instructors can enter A/B/C/F counts and any improvement notes for the sections they taught.</p>
-            <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Start Evaluation Entry</a>
+        <section class="circle-card">
+            <h3>Evaluation Submission</h3>
+            <p>
+                Instructors can enter A/B/C/F counts and any improvement notes for the sections they taught.
+            </p>
+            <a href="{{ url_for('evaluation.select_evaluation') }}" class="circle-link">
+                Start Evaluation Entry
+            </a>
         </section>
 
-        <section class="card">
-            <h3>🔍 Reporting & Analysis</h3>
-            <p>Check out reports that show course links, instructor history, past sections, and evaluation results.</p>
-            <a href="{{ url_for('querying.query_menu') }}" class="btn btn-primary">Run Queries</a>
+        <section class="circle-card">
+            <h3>Reporting & Analysis</h3>
+            <p>
+                Check out reports showing course links, instructor history, past sections, and evaluation results.
+            </p>
+            <a href="{{ url_for('querying.query_menu') }}" class="circle-link">
+                Run Queries
+            </a>
         </section>
+
     </div>
 </div>
 
 <style>
-    /* Simple styling for the index page cards */
-    .menu-sections {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        margin-top: 30px;
-    }
-    .card {
-        flex: 1;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        background-color: #ffffff;
-    }
-    .card h3 {
-        border-bottom: 2px solid #5cb85c;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-    }
+/* Center the menu */
+.circle-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+/* Circle card styling */
+.circle-card {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #cc0033; /* red border */
+    color: #cc0033; /* red text */
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Hover effect */
+.circle-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.2);
+}
+
+/* Titles */
+.circle-card h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Description text */
+.circle-card p {
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    line-height: 1.35;
+}
+
+/* Link button */
+.circle-link {
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    color: #003366; /* blue */
+}
+
+.circle-link:hover {
+    text-decoration: underline;
+}
 </style>
+
 {% endblock %}

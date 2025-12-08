@@ -11,9 +11,10 @@
     </p>
 
     <div class="menu-sections">
+        
         <!-- Degree-Based Queries -->
-        <section class="card">
-            <h3>🎓 Degree-Based Queries</h3>
+        <section class="card circle-card">
+            <h3>Degree-Based Queries</h3>
             <p>These reports focus on a single degree program.</p>
             <ul>
                 <li>
@@ -30,7 +31,7 @@
                         Degree Sections Over Time
                     </a>
                     <small>
-                        Pick a degree and a year range to list all sections of courses that belong
+                        Pick a degree and a year range to list all sections of courses belonging
                         to that degree, in chronological order.
                     </small>
                 </li>
@@ -38,8 +39,8 @@
         </section>
 
         <!-- Course / Instructor Queries -->
-        <section class="card">
-            <h3>📚 Course & Instructor Queries</h3>
+        <section class="card circle-card">
+            <h3>Course & Instructor Queries</h3>
             <p>These reports focus on a specific course or a specific instructor.</p>
             <ul>
                 <li>
@@ -64,18 +65,17 @@
         </section>
 
         <!-- Evaluation-Based Queries -->
-        <section class="card">
-            <h3>📊 Evaluation-Based Queries</h3>
-            <p>These reports use the evaluation data (A/B/C/F counts and improvements).</p>
+        <section class="card circle-card">
+            <h3>Evaluation-Based Queries</h3>
+            <p>These reports use evaluation data (A/B/C/F counts and improvements).</p>
             <ul>
                 <li>
                     <a href="{{ url_for('querying.query_evaluation_status') }}">
                         Evaluation Status by Semester
                     </a>
                     <small>
-                        Pick a term and year to see, for each section and degree, whether
-                        evaluation info is fully entered, partially entered, or missing,
-                        and if the optional improvement paragraph is there.
+                        Pick a term &amp; year to see whether evaluation info is fully entered,
+                        partially entered, missing, and whether the improvement paragraph exists.
                     </small>
                 </li>
                 <li>
@@ -83,58 +83,92 @@
                         Sections Meeting Grade Percentage
                     </a>
                     <small>
-                        Pick a term, year, and percentage (like 70%) to find sections where
-                        at least that percentage of students did not get an F.
+                        Pick a term, year, and percentage (e.g., 70%) to list sections where
+                        at least that percentage of students did not receive an F.
                     </small>
                 </li>
             </ul>
         </section>
+
     </div>
 </div>
 
 <style>
+
+    /* PAGE BACKGROUND COLOR */
+    body {
+        background-color: #c9d9f0 !important;
+    }
+
+    /* Layout for cards */
     .menu-sections {
         display: flex;
         flex-wrap: wrap;
-        gap: 20px;
-        margin-top: 20px;
+        gap: 32px;
+        margin-top: 25px;
+        justify-content: center;
     }
-    .card {
-        flex: 1 1 280px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 16px;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+
+    /* CIRCLE CARD STYLE – bigger, slightly lower text */
+    .circle-card {
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        padding: 40px 20px 22px 20px;   /* ↑ shifted text downward */
+        text-align: center;
+        background: #ffffff;
+        border: 3px solid #cc0033;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        overflow: hidden;
+        box-sizing: border-box;
     }
-    .card h3 {
-        border-bottom: 2px solid #5cb85c;
-        padding-bottom: 8px;
-        margin-top: 0;
-        margin-bottom: 12px;
+
+    .circle-card h3 {
+        color: #cc0033;
+        font-weight: 700;
+        margin-bottom: 8px;
+        font-size: 17px;
     }
-    .card ul {
+
+    .circle-card p {
+        font-size: 13px;
+        color: #cc0033;
+        margin-bottom: 8px;
+        line-height: 1.25;
+    }
+
+    .circle-card ul {
         list-style: none;
-        padding-left: 0;
+        padding: 0;
         margin: 0;
     }
-    .card li {
-        margin-bottom: 10px;
+
+    .circle-card li {
+        margin-bottom: 6px;
     }
-    .card a {
-        display: inline-block;
-        font-weight: 600;
+
+    .circle-card a {
+        color: #003366;
+        font-weight: 700;
         text-decoration: none;
-        color: #007bff;
+        font-size: 13px;
     }
-    .card a:hover {
+
+    .circle-card a:hover {
         text-decoration: underline;
     }
-    .card small {
+
+    .circle-card small {
+        color: #444;
         display: block;
-        font-size: 0.85em;
-        color: #555;
         margin-top: 2px;
+        font-size: 11px;
+        line-height: 1.25;
     }
+
 </style>
+
 {% endblock %}

@@ -8,69 +8,119 @@
     <p>Pick what you want to add or update in the system.</p>
     
     <div class="menu-list">
-        
-        <section class="card">
-            <h3>&#9999;&#65039; Basic Info</h3>
+
+        <!-- Circle 1 -->
+        <section class="circle-card">
+            <h3>Basic Info</h3>
             <p>These are the main things you need to add before connecting anything together.</p>
             <ul>
-                <li><a href="{{ url_for('data_entry.add_degree') }}">Add a Degree (Name & Level)</a></li>
-                <li><a href="{{ url_for('data_entry.add_course') }}">Add a Course (Course Number & Name)</a></li>
-                <li><a href="{{ url_for('data_entry.add_instructor') }}">Add an Instructor (ID & Name)</a></li>
-                <li><a href="{{ url_for('data_entry.add_objective') }}">Add a Learning Objective (Code, Title, Description)</a></li>
+                <li><a href="{{ url_for('data_entry.add_degree') }}">Add a Degree</a></li>
+                <li><a href="{{ url_for('data_entry.add_course') }}">Add a Course</a></li>
+                <li><a href="{{ url_for('data_entry.add_instructor') }}">Add an Instructor</a></li>
+                <li><a href="{{ url_for('data_entry.add_objective') }}">Add a Learning Objective</a></li>
             </ul>
         </section>
 
-        <section class="card">
-            <h3>&#128279; Courses & Connections</h3>
+        <!-- Circle 2 -->
+        <section class="circle-card">
+            <h3>Courses & Connections</h3>
             <p>Set up how courses relate to degrees and record when a class is offered.</p>
             <ul>
-                <li><a href="{{ url_for('data_entry.associate_course_to_degree') }}">Link a Course to a Degree (Core/Required)</a></li>
-                <li><a href="{{ url_for('data_entry.add_section') }}">Add a Course Section for a Semester</a></li>
-                <li><a href="{{ url_for('data_entry.link_course_objective') }}">Connect a Course to Objectives</a></li>
+                <li><a href="{{ url_for('data_entry.associate_course_to_degree') }}">Link Course to Degree</a></li>
+                <li><a href="{{ url_for('data_entry.add_section') }}">Add a Course Section</a></li>
+                <li><a href="{{ url_for('data_entry.link_course_objective') }}">Connect Course to Objectives</a></li>
             </ul>
         </section>
-        
-        <section class="card">
-            <h3>&#128221; Enter or Edit Evaluations</h3>
-            <p>Start entering the evaluation numbers (A, B, C, F counts) for each core objective.</p>
+
+        <!-- Circle 3 -->
+        <section class="circle-card">
+            <h3>Evaluations</h3>
+            <p>Enter the A/B/C/F counts and improvement notes for each objective.</p>
             <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Go to Evaluation Page</a>
         </section>
     </div>
 </div>
 
 <style>
-    /* Styling for the menu sections */
-    .menu-list {
-        display: flex;
-        gap: 20px;
-        margin-top: 20px;
-    }
-    .card {
-        flex: 1;
-        padding: 15px;
-        border: 1px solid #e0e0e0;
-        border-radius: 6px;
-        background-color: #ffffff;
-    }
-    .card h3 {
-        color: #333;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 5px;
-        margin-top: 0;
-    }
-    .card ul {
-        list-style: none;
-        padding: 0;
-    }
-    .card ul li {
-        margin-bottom: 8px;
-    }
-    .card a:not(.btn) {
-        text-decoration: none;
-        color: #007bff;
-    }
-    .card a:hover:not(.btn) {
-        text-decoration: underline;
-    }
+/* ----- Page background: same darker blue ----- */
+body {
+    background-color: #c9d9f0 !important;  /* darker light blue */
+}
+
+/* ---------- Layout ---------- */
+.menu-list {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Circle Cards ---------- */
+.circle-card {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #cc0033;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    padding: 25px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.circle-card h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #cc0033;
+    font-weight: 700;
+}
+
+.circle-card p {
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.circle-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.circle-card ul li {
+    margin: 4px 0;
+}
+
+/* Links inside circles */
+.circle-card a:not(.btn) {
+    color: #003366;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.circle-card a:hover:not(.btn) {
+    text-decoration: underline;
+}
+
+/* Evaluation Button */
+.btn-primary {
+    display: inline-block;
+    background: #cc0033;
+    padding: 8px 14px;
+    margin-top: 8px;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #a80029;
+}
 </style>
+
 {% endblock %}
