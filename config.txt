@@ -2,4 +2,4 @@
 host=localhost
 user=cs5330
 password=pw5330
-database=db_groupprog
+database=db_groupproj
