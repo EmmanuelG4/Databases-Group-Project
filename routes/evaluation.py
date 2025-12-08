@@ -84,12 +84,18 @@ def list_sections_status():
 
         for obj in objectives:
             check_query = """
-                SELECT improvements
+                SELECT
+                    based_on,
+                    perform_a,
+                    perform_b,
+                    perform_c,
+                    perform_f,
+                    improvements
                 FROM objective_eval
                 WHERE sec_num=%s AND sec_term=%s AND sec_year=%s
-                  AND obj_code=%s
-                  AND degree_name=%s AND degree_level=%s
-                  AND course_num=%s
+                AND obj_code=%s
+                AND degree_name=%s AND degree_level=%s
+                AND course_num=%s
             """
 
             eval_row = execute_query(
@@ -102,12 +108,21 @@ def list_sections_status():
             )
 
             if eval_row:
-                obj['status'] = 'Entered'
-                obj['improvement_entered'] = bool(eval_row.get('improvements'))
-                eval_count += 1
+                    obj['status'] = 'Entered'
+                    obj['improvement_entered'] = bool(eval_row.get('improvements'))
+                    obj['based_on'] = eval_row['based_on']
+                    obj['perform_a'] = eval_row['perform_a']
+                    obj['perform_b'] = eval_row['perform_b']
+                    obj['perform_c'] = eval_row['perform_c']
+                    obj['perform_f'] = eval_row['perform_f']
+                    obj['improvements'] = eval_row['improvements']
+
+                    eval_count += 1
             else:
-                obj['status'] = 'Missing'
-                obj['improvement_entered'] = False
+                    obj['status'] = 'Missing'
+                    obj['improvement_entered'] = False
+
+
 
         total = len(objectives)
         if total == 0:

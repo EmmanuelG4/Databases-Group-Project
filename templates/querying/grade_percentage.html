@@ -89,7 +89,10 @@
                         <th>Enrolled</th>
                         <th>Non-'F' Count (A+B+C)</th>
                         <th>Total Grades Entered</th>
-                        <th>Non-'F' % of Enrolled</th>
+                        <th>Non-F % (Eval)</th>
+                        <th>Based On</th>
+                        <th>Objective</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -106,13 +109,9 @@
                         <td>{{ enrolled }}</td>
                         <td>{{ non_f }}</td>
                         <td>{{ row.total_grades_entered }}</td>
-                        <td>
-                            {% if enrolled > 0 %}
-                                {{ ("%.1f" % ((non_f / enrolled) * 100)) }}%
-                            {% else %}
-                                N/A
-                            {% endif %}
-                        </td>
+                        <td>{{ (row.total_non_f / row.num_students * 100) | round(1) }}%</td>
+                        <td>{{ row.based_on }}</td>
+                        <td>{{ row.objective_title }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

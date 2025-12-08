@@ -358,33 +358,28 @@ def query_grade_percentage():
                     S.num_students,
                     OE.degree_name,
                     OE.degree_level,
-                    SUM(OE.perform_a + OE.perform_b + OE.perform_c) AS total_non_f,
-                    SUM(OE.perform_a + OE.perform_b + OE.perform_c + OE.perform_f) AS total_grades_entered
+                    OE.obj_code,
+                    L.title AS objective_title,
+                    OE.based_on,
+                    (OE.perform_a + OE.perform_b + OE.perform_c) AS total_non_f,
+                    (OE.perform_a + OE.perform_b + OE.perform_c + OE.perform_f) AS total_grades_entered
                 FROM objective_eval OE
                 JOIN section S
-                  ON OE.course_num = S.course_num
-                 AND OE.sec_num   = S.sec_num
-                 AND OE.sec_term  = S.sec_term
-                 AND OE.sec_year  = S.sec_year
+                ON OE.course_num = S.course_num
+                AND OE.sec_num   = S.sec_num
+                AND OE.sec_term  = S.sec_term
+                AND OE.sec_year  = S.sec_year
                 JOIN course C ON OE.course_num = C.course_num
+                LEFT JOIN learning_objective L ON OE.obj_code = L.obj_code
                 WHERE OE.sec_term = %s
-                  AND OE.sec_year = %s
-                GROUP BY
-                    OE.course_num,
-                    OE.sec_num,
-                    C.course_name,
-                    OE.sec_term,
-                    OE.sec_year,
-                    S.num_students,
-                    OE.degree_name,
-                    OE.degree_level
-                HAVING
-                    SUM(OE.perform_a + OE.perform_b + OE.perform_c)
-                    >= S.num_students * %s
+                AND OE.sec_year = %s
+                AND (OE.perform_a + OE.perform_b + OE.perform_c) >= S.num_students * %s
                 ORDER BY
                     OE.course_num,
                     OE.sec_num,
-                    OE.degree_name
+                    OE.degree_name,
+                    OE.obj_code,
+                    OE.based_on
             """
             sections = execute_query(
                 grade_query,

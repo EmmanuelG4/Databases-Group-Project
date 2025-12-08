@@ -35,69 +35,84 @@
                     {% if objectives %}
                         <div class="objectives-list">
                             {% for obj in objectives %}
-                                {% set obj_info = obj.info if obj.info is defined else obj %}
-                                {% set eval_data = obj.eval if obj.eval is defined else None %}
 
-                                <div class="objective-entry {{ obj.status | lower }}">
-                                    <h5>
-                                        &#10003; {{ obj_info.obj_code }} - {{ obj_info.title }}
-                                    </h5>
-                                    
-                                    {% if obj.status == 'Missing' %}
-                                        <p class="missing-warning">You still need to enter evaluation info for this objective.</p>
-                                    {% endif %}
+                            <div class="objective-entry {{ obj.status | lower }}">
+                                <h5>
+                                    &#10003; {{ obj.obj_code }} - {{ obj.title }}
+                                </h5>
+                                
+                                {% if obj.status == 'Missing' %}
+                                    <p class="missing-warning">You still need to enter evaluation info for this objective.</p>
+                                {% endif %}
 
-                                    {% set prefix = section.course_num ~ '|' ~ section.sec_num ~ '|' ~ obj_info.obj_code ~ '|' %}
+                                {% set prefix = section.course_num ~ '|' ~ section.sec_num ~ '|' ~ obj.obj_code ~ '|' %}
 
-                                    <div class="form-row">
-                                        <div class="form-group-half">
-                                            <label for="{{ prefix }}based_on">What is this based on?</label>
-                                            <input type="text" 
-                                                   name="{{ prefix }}based_on" 
-                                                   id="{{ prefix }}based_on" 
-                                                   placeholder="Example: Final project, exam, or lab"
-                                                   value="{{ eval_data.based_on if eval_data and eval_data.based_on is defined else '' }}"
-                                                   required>
-                                        </div>
-                                        <div class="form-group-half checkbox-group">
-                                            <input type="checkbox" 
-                                                   name="{{ prefix }}duplicate" 
-                                                   id="{{ prefix }}duplicate">
-                                            <label for="{{ prefix }}duplicate">Use these results for other degrees too?</label>
-                                            <small>This will copy the same results to other degrees that use this course/objective.</small>
-                                        </div>
+                                <div class="form-row">
+                                    <div class="form-group-half">
+                                        <label for="{{ prefix }}based_on">What is this based on?</label>
+                                        <input type="text" 
+                                            name="{{ prefix }}based_on" 
+                                            id="{{ prefix }}based_on" 
+                                            placeholder="Example: Final project, exam, or lab"
+                                            value="{{ obj.based_on if obj.based_on is defined else '' }}"
+                                            required>
                                     </div>
-                                    
-                                    <div class="form-row grades">
-                                        <label>How many students hit each level? (Max: {{ section.num_students }})</label>
-                                        
-                                        <div class="grade-input">
-                                            <label for="{{ prefix }}perform_a">A:</label>
-                                            <input type="number" name="{{ prefix }}perform_a" value="{{ eval_data.perform_a if eval_data and eval_data.perform_a is defined else 0 }}" min="0">
-                                        </div>
-                                        
-                                        <div class="grade-input">
-                                            <label for="{{ prefix }}perform_b">B:</label>
-                                            <input type="number" name="{{ prefix }}perform_b" value="{{ eval_data.perform_b if eval_data and eval_data.perform_b is defined else 0 }}" min="0">
-                                        </div>
-                                        
-                                        <div class="grade-input">
-                                            <label for="{{ prefix }}perform_c">C:</label>
-                                            <input type="number" name="{{ prefix }}perform_c" value="{{ eval_data.perform_c if eval_data and eval_data.perform_c is defined else 0 }}" min="0">
-                                        </div>
-                                        
-                                        <div class="grade-input">
-                                            <label for="{{ prefix }}perform_f">F:</label>
-                                            <input type="number" name="{{ prefix }}perform_f" value="{{ eval_data.perform_f if eval_data and eval_data.perform_f is defined else 0 }}" min="0">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="{{ prefix }}improvements">Any ideas to improve this course? (Optional)</label>
-                                        <textarea name="{{ prefix }}improvements" id="{{ prefix }}improvements" rows="2" placeholder="Write any suggestions you have based on how students did.">{{ eval_data.improvements if eval_data and eval_data.improvements is defined else '' }}</textarea>
+                                    <div class="form-group-half checkbox-group">
+                                        <input type="checkbox" 
+                                            name="{{ prefix }}duplicate" 
+                                            id="{{ prefix }}duplicate">
+                                        <label for="{{ prefix }}duplicate">Use these results for other degrees too?</label>
+                                        <small>This will copy the same results to other degrees that use this course/objective.</small>
                                     </div>
                                 </div>
-                            {% endfor %}
+                                
+                                <div class="form-row grades">
+                                    <label>How many students hit each level? (Max: {{ section.num_students }})</label>
+                                    
+                                    <div class="grade-input">
+                                        <label for="{{ prefix }}perform_a">A:</label>
+                                        <input type="number"
+                                            name="{{ prefix }}perform_a"
+                                            value="{{ obj.perform_a if obj.perform_a is defined else 0 }}"
+                                            min="0">
+                                    </div>
+                                    
+                                    <div class="grade-input">
+                                        <label for="{{ prefix }}perform_b">B:</label>
+                                        <input type="number"
+                                            name="{{ prefix }}perform_b"
+                                            value="{{ obj.perform_b if obj.perform_b is defined else 0 }}"
+                                            min="0">
+                                    </div>
+                                    
+                                    <div class="grade-input">
+                                        <label for="{{ prefix }}perform_c">C:</label>
+                                        <input type="number"
+                                            name="{{ prefix }}perform_c"
+                                            value="{{ obj.perform_c if obj.perform_c is defined else 0 }}"
+                                            min="0">
+                                    </div>
+                                    
+                                    <div class="grade-input">
+                                        <label for="{{ prefix }}perform_f">F:</label>
+                                        <input type="number"
+                                            name="{{ prefix }}perform_f"
+                                            value="{{ obj.perform_f if obj.perform_f is defined else 0 }}"
+                                            min="0">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ prefix }}improvements">Any ideas to improve this course? (Optional)</label>
+                                    <textarea name="{{ prefix }}improvements"
+                                            id="{{ prefix }}improvements"
+                                            rows="2"
+                                            placeholder="Write any suggestions you have based on how students did.">{{ obj.improvements if obj.improvements is defined else '' }}</textarea>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
                         </div>
                     {% else %}
                         <p class="warning">There aren’t any objectives linked to this course for {{ context.degree_name }} ({{ context.degree_level }}).</p>
