@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Associate Core Course with Learning Objective</h2>
-    <p>This links an objective to a course that is designated as 'core' for a specific degree. Both the course and objective must exist.</p>
+    <h2>Link a Core Course to a Learning Objective</h2>
+    <p>Use this form to connect a core course with one of its learning objectives. The course and objective must already be in the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.link_course_objective') }}">
         
@@ -21,7 +21,7 @@
             </select>
             <input type="hidden" id="degree_name_hidden" name="degree_name" required>
             <input type="hidden" id="degree_level_hidden" name="degree_level" required>
-            <small>The objective link is specific to this degree program.</small>
+            <small>This link applies only within the degree you pick here.</small>
         </div>
 
         <div class="form-group">
@@ -32,7 +32,7 @@
                 <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
                 {% endfor %}
             </select>
-            <small>Must be a course designated as **CORE** for the selected degree.</small>
+            <small>The course must already be marked as a core course for this degree.</small>
         </div>
 
         <div class="form-group">
@@ -43,7 +43,7 @@
                 <option value="{{ objective.obj_code }}">{{ objective.obj_code }} - {{ objective.title }}</option>
                 {% endfor %}
             </select>
-            <small>Each core course must be associated with at least one objective.</small>
+            <small>Every core course should be linked to at least one learning objective.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Link Objective to Course</button>
@@ -62,7 +62,8 @@
             document.getElementById('degree_level_hidden').value = '';
         }
     });
-    // Initialize hidden fields on load 
+
+    // Make sure hidden fields are set on load
     document.getElementById('degree_select').dispatchEvent(new Event('change'));
 </script>
 {% endblock %}

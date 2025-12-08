@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Enter Course/Section for a Given Semester</h2>
-    <p>This creates a unique course offering and assigns the primary instructor.</p>
+    <h2>Add a Course Section</h2>
+    <p>Use this form to enter a specific course section for a semester and assign who’s teaching it.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_section') }}">
         
@@ -17,7 +17,7 @@
                 <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
                 {% endfor %}
             </select>
-            <small>The course must exist in the database.</small>
+            <small>The course has to already exist in the system.</small>
         </div>
 
         <div class="form-group">
@@ -28,8 +28,8 @@
                 name="sec_num" 
                 required 
                 maxlength="3" 
-                placeholder="e.g., 001">
-            [cite_start]<small>A 3-digit number associated with the section[cite: 15].</small>
+                placeholder="Example: 001">
+            <small>Use a 3-digit section number.</small>
         </div>
 
         <div class="form-group-inline">
@@ -51,7 +51,7 @@
                     required 
                     min="2000" 
                     max="2100" 
-                    placeholder="e.g., 2025">
+                    placeholder="Example: 2025">
             </div>
         </div>
 
@@ -63,8 +63,8 @@
                 name="num_students" 
                 required 
                 min="0" 
-                placeholder="e.g., 30">
-            [cite_start]<small>Record the number of students enrolled in this section[cite: 16].</small>
+                placeholder="Example: 30">
+            <small>Enter how many students are in this section.</small>
         </div>
         
         <div class="form-group">
@@ -75,7 +75,7 @@
                 <option value="{{ instructor.instructor_id }}">{{ instructor.instructor_name }} (ID: {{ instructor.instructor_id }})</option>
                 {% endfor %}
             </select>
-            [cite_start]<small>Each section is taught by an instructor[cite: 17].</small>
+            <small>Pick the instructor who teaches this section.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Add Section & Assign Instructor</button>

@@ -4,36 +4,36 @@
 
 {% block content %}
 <div class="container">
-    <h2>Data Entry Operations Menu</h2>
-    <p>Select the type of information you need to enter or modify for the program evaluation system.</p>
+    <h2>Data Entry Menu</h2>
+    <p>Pick what you want to add or update in the system.</p>
     
     <div class="menu-list">
         
         <section class="card">
-            <h3>&#9999;&#65039; Basic Entities (Independent Data)</h3>
-            <p>Enter foundational records that must exist before they can be linked to other data.</p>
+            <h3>&#9999;&#65039; Basic Info</h3>
+            <p>These are the main things you need to add before connecting anything together.</p>
             <ul>
-                <li><a href="{{ url_for('data_entry.add_degree') }}">Add Degree (Name & Level)</a></li>
-                <li><a href="{{ url_for('data_entry.add_course') }}">Add Course (Number & Name)</a></li>
-                <li><a href="{{ url_for('data_entry.add_instructor') }}">Add Instructor (ID & Name)</a></li>
-                <li><a href="{{ url_for('data_entry.add_objective') }}">Add Learning Objective (Code, Title, Description)</a></li>
+                <li><a href="{{ url_for('data_entry.add_degree') }}">Add a Degree (Name & Level)</a></li>
+                <li><a href="{{ url_for('data_entry.add_course') }}">Add a Course (Course Number & Name)</a></li>
+                <li><a href="{{ url_for('data_entry.add_instructor') }}">Add an Instructor (ID & Name)</a></li>
+                <li><a href="{{ url_for('data_entry.add_objective') }}">Add a Learning Objective (Code, Title, Description)</a></li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>&#128279; Associations & Course Offerings</h3>
-            <p>Establish relationships and record course offerings for a given semester.</p>
+            <h3>&#128279; Courses & Connections</h3>
+            <p>Set up how courses relate to degrees and record when a class is offered.</p>
             <ul>
-                <li><a href="{{ url_for('data_entry.associate_course_to_degree') }}">Associate Course with Degree (**Requires**/Core Status)</a></li>
-                <li><a href="{{ url_for('data_entry.add_section') }}">Enter Course/Section for a given Semester (Section & Teaches)</a></li>
-                <li><a href="{{ url_for('data_entry.link_course_objective') }}">Associate Core Course with Objectives</a></li>
+                <li><a href="{{ url_for('data_entry.associate_course_to_degree') }}">Link a Course to a Degree (Core/Required)</a></li>
+                <li><a href="{{ url_for('data_entry.add_section') }}">Add a Course Section for a Semester</a></li>
+                <li><a href="{{ url_for('data_entry.link_course_objective') }}">Connect a Core Course to Objectives</a></li>
             </ul>
         </section>
         
         <section class="card">
-            <h3>&#128221; Enter/Edit Evaluations</h3>
-            <p>Start the multi-step process for instructors to enter performance metrics (A, B, C, F counts) for core objectives.</p>
-            <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Start Evaluation Workflow</a>
+            <h3>&#128221; Enter or Edit Evaluations</h3>
+            <p>Start entering the evaluation numbers (A, B, C, F counts) for each core objective.</p>
+            <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Go to Evaluation Page</a>
         </section>
     </div>
 </div>

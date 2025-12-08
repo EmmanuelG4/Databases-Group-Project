@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Enter New Instructor Information</h2>
+    <h2>Add a New Instructor</h2>
+    <p>Fill out the info below to add an instructor to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_instructor') }}">
         
@@ -16,8 +17,8 @@
                 name="instructor_id" 
                 required 
                 maxlength="8" 
-                placeholder="e.g., I1234567">
-            <small>A unique ID for the instructor (e.g., an 8-character string).</small>
+                placeholder="Example: I1234567">
+            <small>This should be the instructor's unique ID.</small>
         </div>
 
         <div class="form-group">
@@ -28,7 +29,8 @@
                 name="instructor_name" 
                 required 
                 maxlength="50" 
-                placeholder="e.g., Dr. Alice Smith">
+                placeholder="Example: Dr. Alice Smith">
+            <small>Enter the instructor’s full name.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Add Instructor</button>

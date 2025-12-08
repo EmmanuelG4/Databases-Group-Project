@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Enter New Course Information</h2>
+    <h2>Add a New Course</h2>
+    <p>Fill out the info below to add a course to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_course') }}">
         
@@ -16,8 +17,8 @@
                 name="course_num" 
                 required 
                 maxlength="8" 
-                placeholder="e.g., CS5330">
-            [cite_start]<small>A unique course number (e.g., a 2-4 letter department code + a four-digit number). [cite: 12]</small>
+                placeholder="Example: CS1337 or MATH1314">
+            <small>Use the normal course format, like a department code followed by numbers.</small>
         </div>
 
         <div class="form-group">
@@ -28,8 +29,8 @@
                 name="course_name" 
                 required 
                 maxlength="60" 
-                placeholder="e.g., Advanced Database Systems">
-            [cite_start]<small>A unique name for the course. [cite: 12]</small>
+                placeholder="Example: Intro to Programming">
+            <small>Type the full name of the course the way it shows up in the catalog.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Add Course</button>
