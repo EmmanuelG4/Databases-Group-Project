@@ -176,6 +176,22 @@ def save_evaluation():
                 perform_c = int(request.form.get(prefix + 'perform_c') or 0)
                 perform_f = int(request.form.get(prefix + 'perform_f') or 0)
                 improvements = request.form.get(prefix + 'improvements')
+                
+               #make sure not too many
+                total_entered = perform_a + perform_b + perform_c + perform_f
+
+                cursor.execute(
+                    "SELECT num_students FROM section WHERE course_num=%s AND sec_num=%s AND sec_term=%s AND sec_year=%s",
+                    (course_num, sec_num, sec_term_context, sec_year_context)
+                )
+                student_limit_row = cursor.fetchone()
+                
+                if student_limit_row:
+                    max_students = student_limit_row[0]
+                    
+                    if total_entered != max_students:
+                        flash(f"Error: You entered {total_entered} grades for Course {course_num} (Section {sec_num}), but the class limit is {max_students}.", "error")
+                        return redirect(url_for('evaluation.select_evaluation'))
 
                 eval_params = (
                     based_on, perform_a, perform_b, perform_c, perform_f, improvements,

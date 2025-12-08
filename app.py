@@ -9,7 +9,7 @@ from routes.querying import querying_bp
 
 def create_app():
     app = Flask(__name__)
-
+    app.secret_key = 'databases'
     try:
         config = ConfigParser()
         config_path = os.path.join(app.root_path, 'config.txt')
