@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Enter New Learning Objective</h2>
+    <h2>Add a New Learning Objective</h2>
+    <p>Fill out the details below to add a new objective to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_objective') }}">
         
@@ -16,8 +17,8 @@
                 name="obj_code" 
                 required 
                 maxlength="8" 
-                placeholder="e.g., LO-A1">
-            <small>A unique code associated with the objective.</small>
+                placeholder="Example: LO-A1">
+            <small>This is the short code used to identify the objective.</small>
         </div>
 
         <div class="form-group">
@@ -28,18 +29,18 @@
                 name="title" 
                 required 
                 maxlength="120" 
-                placeholder="e.g., Demonstrate Database Normalization">
-            <small>A unique title (120 characters maximum).</small>
+                placeholder="Example: Demonstrate Database Normalization">
+            <small>Give the objective a clear, simple title.</small>
         </div>
 
         <div class="form-group">
-            <label for="description">Description:</label>
+            <label for="description">Description (Optional):</label>
             <textarea 
                 id="description" 
                 name="description" 
                 rows="4" 
-                placeholder="Provide a detailed description of what the student should be able to do."></textarea>
-            <small>Text with arbitrary length.</small>
+                placeholder="Write a short description of what students should be able to do."></textarea>
+            <small>You can type as much detail as you want here.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Add Objective</button>

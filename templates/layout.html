@@ -1,11 +1,9 @@
-# templates/layout.html
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}CS 5330 Program Evaluation App{% endblock %}</title>
+    <title>{% block title %}CS 5330 Program Evaluation Group Project App{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -15,7 +13,7 @@
             <div class="nav-links">
                 <a href="{{ url_for('data_entry.entry_menu') }}">Data Entry</a>
                 <a href="{{ url_for('evaluation.select_evaluation') }}">Evaluation</a>
-                <a href="{{ url_for('querying.query_menu') }}">Querying</a>
+                <a href="{{ url_for('querying.query_menu') }}">Reports</a>
             </div>
         </nav>
     </header>
@@ -38,7 +36,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 CS 5330 Project</p>
+        <p>&copy; CS 5330 Group Project</p>
     </footer>
 </body>
 </html>

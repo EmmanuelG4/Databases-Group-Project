@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <h2>Assign Course to Degree (Requires/Core Status)</h2>
-    <p>This links a course to a degree program and determines if it is a core requirement.</p>
+    <h2>Link a Course to a Degree</h2>
+    <p>Use this form to connect a course to a degree program and mark whether it counts as a core requirement.</p>
     
     <form method="POST" action="{{ url_for('data_entry.associate_course_to_degree') }}">
         
@@ -21,6 +21,7 @@
             </select>
             <input type="hidden" id="degree_name_hidden" name="degree_name" required>
             <input type="hidden" id="degree_level_hidden" name="degree_level" required>
+            <small>Pick the degree program you want to update.</small>
         </div>
 
         <div class="form-group">
@@ -31,12 +32,13 @@
                 <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
                 {% endfor %}
             </select>
+            <small>Choose the course you want to link to the degree.</small>
         </div>
 
         <div class="form-group checkbox-group">
             <input type="checkbox" id="is_core" name="is_core">
-            <label for="is_core">Designate as **Core Course** for this Degree?</label>
-            <small>If checked, this course can be associated with learning objectives.</small>
+            <label for="is_core">Mark as a **Core Course** for this degree?</label>
+            <small>If checked, this course can be tied to learning objectives later.</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Assign Course to Degree</button>
@@ -55,7 +57,7 @@
             document.getElementById('degree_level_hidden').value = '';
         }
     });
-    // Initialize hidden fields on load if an option is pre-selected (though not common)
+    // Make sure hidden fields update if something is pre-selected
     document.getElementById('degree_select').dispatchEvent(new Event('change'));
 </script>
 {% endblock %}

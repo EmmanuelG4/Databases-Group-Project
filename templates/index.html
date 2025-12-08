@@ -4,26 +4,26 @@
 
 {% block content %}
 <div class="container">
-    <h2>Welcome to the Program Evaluation Database System</h2>
+    <h2>Welcome to the Program Evaluation System</h2>
     
-    <p>This application is designed to store and analyze data for the evaluation and continuous review of university degree programs, faculty, and courses.</p>
+    <p>This site helps keep track of degree programs, courses, instructors, and evaluations. You can enter data, submit evaluations, and run reports to see how everything connects.</p>
     
     <div class="menu-sections">
         <section class="card">
             <h3>📝 Data Entry & Setup</h3>
-            <p>Use these forms to enter foundational data: creating new degrees, courses, instructors, learning objectives, and setting up course-to-degree associations.</p>
+            <p>Use these forms to add the basics—degrees, courses, instructors, learning objectives, and course-to-degree links.</p>
             <a href="{{ url_for('data_entry.entry_menu') }}" class="btn btn-primary">Go to Data Entry</a>
         </section>
 
         <section class="card">
             <h3>👩‍🏫 Evaluation Submission</h3>
-            <p>This workflow allows instructors to enter performance metrics (A, B, C, F counts) and improvement suggestions for specific course sections and objectives.</p>
+            <p>Instructors can enter A/B/C/F counts and any improvement notes for the sections they taught.</p>
             <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Start Evaluation Entry</a>
         </section>
 
         <section class="card">
             <h3>🔍 Reporting & Analysis</h3>
-            <p>Access various reports to list course associations, instructor history, section offerings, and view evaluation status and grade performance percentages.</p>
+            <p>Check out reports that show course links, instructor history, past sections, and evaluation results.</p>
             <a href="{{ url_for('querying.query_menu') }}" class="btn btn-primary">Run Queries</a>
         </section>
     </div>
