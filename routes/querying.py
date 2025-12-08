@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from database.handler import execute_query
 
-# Blueprint for query/report pages
 querying_bp = Blueprint('querying', __name__, url_prefix='/query', template_folder='../templates')
 
 

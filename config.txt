@@ -1,5 +1,5 @@
 [database]
 host=localhost
-user=mc5330
+user=cs5330
 password=pw5330
-database=dbprog
+database=db_groupprog

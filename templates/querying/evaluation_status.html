@@ -1,0 +1,170 @@
+{% extends "layout.html" %}
+
+{% block title %}Evaluation Status by Semester{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Evaluation Status: Full / Partial / Not Entered</h2>
+
+    <p>
+        This page lets you pick a semester and see, for every section offered,
+        how far along the objective evaluations are for each degree
+        (Fully Entered, Partially Entered, or Not Entered).
+    </p>
+
+    <!-- Form: pick term + year -->
+    <form method="POST" action="{{ url_for('querying.query_evaluation_status') }}" class="eval-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="sec_term">Term (Required):</label>
+                <select id="sec_term" name="sec_term" required>
+                    <option value="">-- Select Term --</option>
+                    {% for t in terms %}
+                    <option value="{{ t }}"
+                        {% if request.form.get('sec_term') == t %}
+                            selected
+                        {% endif %}>
+                        {{ t }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sec_year">Year (Required):</label>
+                <input
+                    type="number"
+                    id="sec_year"
+                    name="sec_year"
+                    min="2000"
+                    max="2100"
+                    required
+                    placeholder="e.g., 2024"
+                    value="{{ request.form.get('sec_year', '') }}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Show Evaluation Status</button>
+    </form>
+
+    {% if results is not none %}
+        <hr>
+
+        <h3>Evaluation Status for Selected Semester</h3>
+
+        {% if results %}
+            <p>
+                Each row below is a section offered in the selected term and year.
+                Under “Per-Degree Evaluation Status” you can see how complete the
+                evaluations are for each degree program that uses that course.
+            </p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Course #</th>
+                        <th>Course Name</th>
+                        <th>Section #</th>
+                        <th>Instructor</th>
+                        <th>Term</th>
+                        <th>Year</th>
+                        <th>Enrolled</th>
+                        <th>Per-Degree Evaluation Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sec in results %}
+                    <tr>
+                        <td>{{ sec.course_num }}</td>
+                        <td>{{ sec.course_name }}</td>
+                        <td>{{ sec.sec_num }}</td>
+                        <td>{{ sec.instructor_name or "N/A" }}</td>
+                        <td>{{ sec.sec_term }}</td>
+                        <td>{{ sec.sec_year }}</td>
+                        <td>{{ sec.num_students }}</td>
+                        <td>
+                            {% if sec.evaluations %}
+                                <ul class="status-list">
+                                    {% for ev in sec.evaluations %}
+                                    <li>
+                                        <strong>{{ ev.degree }}:</strong>
+                                        {{ ev.status }}
+                                        &nbsp;|&nbsp;
+                                        Improvement Paragraph:
+                                        <span class="{% if ev.improvement_paragraph == 'Entered' %}ok-text{% else %}missing-text{% endif %}">
+                                            {{ ev.improvement_paragraph }}
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <em>No degree programs found for this course.</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No sections were found for that term and year.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+<style>
+    .eval-form {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .form-group {
+        flex: 1 1 220px;
+        min-width: 220px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95em;
+        margin-top: 10px;
+    }
+
+    .table thead {
+        background-color: #f5f5f5;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .status-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .status-list li {
+        margin-bottom: 4px;
+    }
+
+    .ok-text {
+        color: #2b7a0b; 
+        font-weight: 600;
+    }
+
+    .missing-text {
+        color: #b22222; 
+        font-weight: 600;
+    }
+</style>
+{% endblock %}

@@ -1,5 +1,5 @@
-CREATE DATABASE dbprog;
-USE dbprog;
+CREATE DATABASE db_groupproj;
+USE db_groupproj;
 
 CREATE TABLE degree (
 	degree_name VARCHAR(30),

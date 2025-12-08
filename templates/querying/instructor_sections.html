@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block title %}Instructor: Sections Taught in Range{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Instructor: Sections Taught in a Year Range</h2>
+
+    <p>
+        Use this page to look up what an instructor has taught over a certain range of years.
+        Pick an instructor, set the start and end year, and the system will list all matching sections.
+    </p>
+
+    <!-- Form: pick instructor + year range -->
+    <form method="POST" action="{{ url_for('querying.query_instructor_sections') }}" class="instructor-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="instructor_select">Instructor (Required):</label>
+                <select id="instructor_select" name="instructor_select" required>
+                    <option value="">-- Select Instructor --</option>
+                    {% for inst in instructors %}
+                    <option value="{{ inst.instructor_id }}"
+                        {% if request.form.get('instructor_select') == inst.instructor_id %}
+                            selected
+                        {% endif %}>
+                        {{ inst.instructor_name }} ({{ inst.instructor_id }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_year">Start Year (Required):</label>
+                <input
+                    type="number"
+                    id="start_year"
+                    name="start_year"
+                    min="2000"
+                    max="2100"
+                    required
+                    placeholder="e.g., 2020"
+                    value="{{ request.form.get('start_year', '') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="end_year">End Year (Required):</label>
+                <input
+                    type="number"
+                    id="end_year"
+                    name="end_year"
+                    min="2000"
+                    max="2100"
+                    required
+                    placeholder="e.g., 2025"
+                    value="{{ request.form.get('end_year', '') }}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Show Teaching History</button>
+    </form>
+
+    {% if sections is not none %}
+        <hr>
+
+        <h3>Teaching History for Selected Instructor</h3>
+
+        {% if sections %}
+            <p>
+                These are the sections this instructor taught in the chosen year range.
+            </p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Course #</th>
+                        <th>Course Name</th>
+                        <th>Section #</th>
+                        <th>Term</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sec in sections %}
+                    <tr>
+                        <td>{{ sec.course_num }}</td>
+                        <td>{{ sec.course_name }}</td>
+                        <td>{{ sec.sec_num }}</td>
+                        <td>{{ sec.sec_term }}</td>
+                        <td>{{ sec.sec_year }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No sections were found for that instructor and year range.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+<style>
+    .instructor-form {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .form-group {
+        flex: 1 1 220px;
+        min-width: 220px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95em;
+        margin-top: 10px;
+    }
+
+    .table thead {
+        background-color: #f5f5f5;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: left;
+    }
+</style>
+{% endblock %}

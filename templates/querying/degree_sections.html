@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}Degree: Sections Offered in Range{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Degree: Sections Offered in a Year Range</h2>
+
+    <p>
+        This page lets you pick a degree and a year range, then shows all course
+        sections that were offered for that degree during that time.
+    </p>
+
+    <!-- Degree + year range form -->
+    <form method="POST" action="{{ url_for('querying.query_degree_sections') }}" class="degree-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="degree_select">Select Degree (Required):</label>
+                <select id="degree_select" name="degree_select" required>
+                    <option value="">-- Select Degree --</option>
+                    {% for degree in degrees %}
+                    <option value="{{ degree.degree_name }}|{{ degree.degree_level }}"
+                        {% if request.form.get('degree_select') == degree.degree_name ~ '|' ~ degree.degree_level %}
+                            selected
+                        {% endif %}>
+                        {{ degree.degree_name }} ({{ degree.degree_level }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_year">Start Year (Required):</label>
+                <input
+                    type="number"
+                    id="start_year"
+                    name="start_year"
+                    min="2000"
+                    max="2100"
+                    required
+                    placeholder="e.g., 2020"
+                    value="{{ request.form.get('start_year', '') }}">
+            </div>
+
+            <div class="form-group">
+                <label for="end_year">End Year (Required):</label>
+                <input
+                    type="number"
+                    id="end_year"
+                    name="end_year"
+                    min="2000"
+                    max="2100"
+                    required
+                    placeholder="e.g., 2025"
+                    value="{{ request.form.get('end_year', '') }}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Show Sections</button>
+    </form>
+
+    {% if sections is not none %}
+        <hr>
+
+        <h3>Sections Matching Your Search</h3>
+
+        {% if sections %}
+            <p>
+                These are all the sections in the selected year range for courses that
+                belong to the chosen degree. Courses marked as <strong>core</strong>
+                are main required classes for that program.
+            </p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Course #</th>
+                        <th>Course Name</th>
+                        <th>Section #</th>
+                        <th>Term</th>
+                        <th>Year</th>
+                        <th>Core for Degree?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sec in sections %}
+                    <tr>
+                        <td>{{ sec.course_num }}</td>
+                        <td>{{ sec.course_name }}</td>
+                        <td>{{ sec.sec_num }}</td>
+                        <td>{{ sec.sec_term }}</td>
+                        <td>{{ sec.sec_year }}</td>
+                        <td>
+                            {% if sec.core %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No sections were found for that degree and year range.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+<style>
+    .degree-form {
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .form-group {
+        flex: 1 1 200px;
+        min-width: 200px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95em;
+        margin-top: 10px;
+    }
+
+    .table thead {
+        background-color: #f5f5f5;
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 6px 8px;
+        text-align: left;
+    }
+</style>
+{% endblock %}
