@@ -15,12 +15,13 @@
         <li>Which courses are connected to which objectives.</li>
     </ul>
 
-    <!-- Degree selection form -->
+    <!-- deg select form -->
     <form method="POST" action="{{ url_for('querying.query_degree_details') }}" class="degree-form">
         <div class="form-group">
             <label for="degree_select">Select Degree (Required):</label>
             <select id="degree_select" name="degree_select" required>
                 <option value="">-- Select Degree --</option>
+                <!--populate dropdown w/ degs from db-->
                 {% for degree in degrees %}
                 <option value="{{ degree.degree_name }}|{{ degree.degree_level }}"
                     {% if results and results.degree_name == degree.degree_name and results.degree_level == degree.degree_level %}
@@ -34,7 +35,7 @@
 
         <button type="submit" class="btn btn-primary">Show Degree Details</button>
     </form>
-
+    <!--only show results after deg selected-->
     {% if results %}
         <hr>
 
@@ -44,7 +45,7 @@
         </p>
 
         <div class="degree-details-layout">
-            <!-- Courses table -->
+            <!--courses table-->
             <section class="card">
                 <h3>Courses for This Degree</h3>
                 {% if results.courses %}
@@ -81,7 +82,7 @@
                 {% endif %}
             </section>
 
-            <!-- Objectives + Associations -->
+            <!--objectives & associations-->
             <section class="card">
                 <h3>Learning Objectives & Course Links</h3>
                 {% if results.objectives %}
@@ -110,7 +111,7 @@
                                         {% set links_for_obj = results.associated_links
                                         | selectattr('obj_code', 'equalto', obj.obj_code)
                                             | list %}
-
+                                            <!--courses as list-->
                                         {% if links_for_obj %}
                                             <ul class="course-links-list">
                                                 {% for link in links_for_obj %}

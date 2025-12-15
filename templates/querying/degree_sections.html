@@ -11,7 +11,7 @@
         sections that were offered for that degree during that time.
     </p>
 
-    <!-- Degree + year range form -->
+    <!-- deg and year range form-->
     <form method="POST" action="{{ url_for('querying.query_degree_sections') }}" class="degree-form">
         <div class="form-row">
             <div class="form-group">
@@ -55,10 +55,10 @@
                     value="{{ request.form.get('end_year', '') }}">
             </div>
         </div>
-
+        
         <button type="submit" class="btn btn-primary">Show Sections</button>
     </form>
-
+    <!--only show results after search-->
     {% if sections is not none %}
         <hr>
 
@@ -70,7 +70,7 @@
                 belong to the chosen degree. Courses marked as <strong>core</strong>
                 are main required classes for that program.
             </p>
-
+            <!--matching sections table-->
             <table class="table">
                 <thead>
                     <tr>

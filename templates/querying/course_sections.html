@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container">
+    <!--header-->
     <h2>Course: Sections Offered in a Year Range</h2>
 
     <p>
@@ -12,7 +13,7 @@
         during those years, along with enrollment and (if available) the instructor.
     </p>
 
-    <!-- Form: pick course + year range -->
+    <!-- form for course and yr -->
     <form method="POST" action="{{ url_for('querying.query_course_sections') }}" class="course-form">
         <div class="form-row">
             <div class="form-group">
@@ -31,6 +32,7 @@
             </div>
 
             <div class="form-group">
+                <!--start yr-->
                 <label for="start_year">Start Year (Required):</label>
                 <input
                     type="number"
@@ -44,6 +46,7 @@
             </div>
 
             <div class="form-group">
+                <!--end yr-->
                 <label for="end_year">End Year (Required):</label>
                 <input
                     type="number"
@@ -56,10 +59,10 @@
                     value="{{ request.form.get('end_year', '') }}">
             </div>
         </div>
-
+            <!--submit button-->
         <button type="submit" class="btn btn-primary">Show Sections</button>
     </form>
-
+    <!--only show results after search submitted-->
     {% if sections is not none %}
         <hr>
 
@@ -71,7 +74,7 @@
                 chosen year range. If an instructor isn’t listed, the section
                 may not have a teaching record in the database.
             </p>
-
+            <!--display section info-->
             <table class="table">
                 <thead>
                     <tr>
@@ -82,6 +85,7 @@
                         <th>Instructor</th>
                     </tr>
                 </thead>
+                <!--loop each returned sec-->
                 <tbody>
                     {% for sec in sections %}
                     <tr>
@@ -89,6 +93,7 @@
                         <td>{{ sec.sec_term }}</td>
                         <td>{{ sec.sec_year }}</td>
                         <td>{{ sec.num_students }}</td>
+                        <!--if available, show instructor name, else no instrucotr-->
                         <td>
                             {% if sec.instructor_name %}
                                 {{ sec.instructor_name }}

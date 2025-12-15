@@ -12,7 +12,7 @@
         (Fully Entered, Partially Entered, or Not Entered).
     </p>
 
-    <!-- Form: pick term + year -->
+    <!--pick term and year form-->
     <form method="POST" action="{{ url_for('querying.query_evaluation_status') }}" class="eval-form">
         <div class="form-row">
             <div class="form-group">
@@ -46,7 +46,7 @@
 
         <button type="submit" class="btn btn-primary">Show Evaluation Status</button>
     </form>
-
+    <!--only show results after search-->
     {% if results is not none %}
         <hr>
 
@@ -58,7 +58,7 @@
                 Under “Per-Degree Evaluation Status” you can see how complete the
                 evaluations are for each degree program that uses that course.
             </p>
-
+            <!--selection adn eval status table-->
             <table class="table">
                 <thead>
                     <tr>
@@ -84,6 +84,7 @@
                         <td>{{ sec.num_students }}</td>
                         <td>
                             {% if sec.evaluations %}
+                            <!--list of eval stat entries per deg-->
                                 <ul class="status-list">
                                     {% for ev in sec.evaluations %}
                                     <li>

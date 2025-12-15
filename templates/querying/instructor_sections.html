@@ -11,7 +11,7 @@
         Pick an instructor, set the start and end year, and the system will list all matching sections.
     </p>
 
-    <!-- Form: pick instructor + year range -->
+    <!-- instructor and yr range form-->
     <form method="POST" action="{{ url_for('querying.query_instructor_sections') }}" class="instructor-form">
         <div class="form-row">
             <div class="form-group">
@@ -68,7 +68,7 @@
             <p>
                 These are the sections this instructor taught in the chosen year range.
             </p>
-
+            <!--sectinos taught by instructor table-->
             <table class="table">
                 <thead>
                     <tr>

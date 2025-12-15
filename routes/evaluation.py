@@ -4,11 +4,12 @@ from database.handler import execute_query, get_db_connection_for_request
 
 evaluation_bp = Blueprint('evaluation', __name__, url_prefix='/evaluation', template_folder='../templates')
 
-
+#blueprint for eval routes
 @evaluation_bp.route('/', methods=['GET'])
 @evaluation_bp.route('/select', methods=['GET'])
 def select_evaluation():
     """Step 1: Let the instructor pick degree, instructor, and semester."""
+   #dropdowns for deg and instructor
     try:
         degrees = execute_query(
             "SELECT degree_name, degree_level FROM degree ORDER BY degree_name"
@@ -25,6 +26,7 @@ def select_evaluation():
             instructors=instructors,
             terms=terms
         )
+    #catch errors
     except Exception as e:
         flash(f'Error loading dropdowns: {e}', 'error')
         return redirect(url_for('index'))
@@ -33,7 +35,7 @@ def select_evaluation():
 @evaluation_bp.route('/list_sections', methods=['GET'])
 def list_sections_status():
     """Show all sections taught that semester and whether their objectives are entered."""
-    
+    #get params from form
     degree_combined = request.args.get('degree')
     instructor_id = request.args.get('instructor_id')
     sec_term = request.args.get('sec_term')
@@ -42,9 +44,9 @@ def list_sections_status():
     if not all([degree_combined, instructor_id, sec_term, sec_year]):
         flash("Please fill out all fields first.", 'error')
         return redirect(url_for('evaluation.select_evaluation'))
-
+    #split degree into name and level
     degree_name, degree_level = degree_combined.split('|')
-
+    #query sections taught by instructor that term
     query_sections = """
         SELECT S.sec_num, S.course_num, S.sec_term, S.sec_year,
                C.course_name, S.num_students
@@ -69,7 +71,7 @@ def list_sections_status():
 
     for section in sections:
         course_num = section['course_num']
-
+        #find objs for course and degree
         query_objs = """
             SELECT L.obj_code, L.title
             FROM associated A
@@ -81,7 +83,7 @@ def list_sections_status():
         objectives = execute_query(query_objs, (degree_name, degree_level, course_num))
 
         eval_count = 0
-
+        #check eval status for objs
         for obj in objectives:
             check_query = """
                 SELECT
@@ -106,7 +108,7 @@ def list_sections_status():
                 ),
                 fetch_one=True
             )
-
+            #obj is entered if eval row exists
             if eval_row:
                     obj['status'] = 'Entered'
                     obj['improvement_entered'] = bool(eval_row.get('improvements'))
@@ -139,7 +141,7 @@ def list_sections_status():
             'objectives': objectives,
             'status': status
         })
-
+    #render pg
     return render_template(
         'evaluation/eval_entry.html',
         sections_data=sections_data,
@@ -156,7 +158,7 @@ def list_sections_status():
 @evaluation_bp.route('/save', methods=['POST'])
 def save_evaluation():
     """Save all evaluation data entered on the big form."""
-
+    #helper to check if eval row exists
     def check_exists(cursor, pk_params):
         """Check whether this objective_eval row already exists."""
         check_query = """
@@ -168,17 +170,17 @@ def save_evaluation():
         """
         cursor.execute(check_query, pk_params)
         return cursor.fetchone()
-
+    
     conn = get_db_connection_for_request()
     cursor = conn.cursor()
-
+    #context 
     degree_name_context = request.form.get('degree_name')
     degree_level_context = request.form.get('degree_level')
     sec_term_context = request.form.get('sec_term')
     sec_year_context = request.form.get('sec_year')
 
     saved_count = 0
-
+    #process each objective eval entry
     try:
         for key, value in request.form.items():
             if "|" in key and key.endswith("|based_on"):
@@ -214,10 +216,11 @@ def save_evaluation():
                     obj_code, degree_name_context, degree_level_context, course_num
                 )
 
-                pk_params = eval_params[6:]  # primary key fields
-
+                #primary key fields
+                pk_params = eval_params[6:]  
+                
                 exists = check_exists(cursor, pk_params)
-
+                #update or insert
                 if exists:
                     update_sql = """
                         UPDATE objective_eval
@@ -241,7 +244,7 @@ def save_evaluation():
                     cursor.execute(insert_sql, eval_params)
 
                 saved_count += 1
-
+                #duplicates
                 duplicate_key = f"{prefix}duplicate"
                 if request.form.get(duplicate_key) == 'on':
                     query_other = """

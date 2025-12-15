@@ -12,7 +12,7 @@
         is above that percentage of the enrolled students.
     </p>
 
-    <!-- Form: select term, year, and percentage threshold -->
+    <!-- term, year, and percent threshold form -->
     <form method="POST" action="{{ url_for('querying.query_grade_percentage') }}" class="grade-form">
         <div class="form-row">
             <div class="form-group">
@@ -76,7 +76,7 @@
                 <strong>A + B + C</strong> totals greater than or equal to the
                 required percentage of enrolled students for the chosen semester.
             </p>
-
+            <!--sections that meet threshold table-->
             <table class="table">
                 <thead>
                     <tr>

@@ -4,11 +4,12 @@
 
 {% block content %}
 <div class="container">
+    <!--explanation --> 
     <h2>Evaluation Entry: Pick Your Setup</h2>
     <p>Choose the degree, instructor, and semester to see which class sections need evaluations.</p>
-    
+    <!--send vals to backend to find status-->
     <form method="GET" action="{{ url_for('evaluation.list_sections_status') }}">
-        
+        <!-- degree selection -->
         <div class="form-group">
             <label for="degree_select">Degree Program (Required):</label>
             <select id="degree_select" name="degree" required>
@@ -21,7 +22,8 @@
             </select>
             <small>This tells the system which set of objectives to use for the evaluations.</small>
         </div>
-
+        <!--instructor selection as instructor id--> 
+        
         <div class="form-group">
             <label for="instructor_select">Instructor (Required):</label>
             <select id="instructor_select" name="instructor_id" required>
@@ -33,7 +35,7 @@
                 {% endfor %}
             </select>
         </div>
-
+        <!--sem and year for term-->
         <div class="form-group-inline">
             <div class="form-group">
                 <label for="sec_term">Semester (Required):</label>
@@ -44,6 +46,7 @@
                     {% endfor %}
                 </select>
             </div>
+            <!-- yr input reasoable-->
             <div class="form-group">
                 <label for="sec_year">Year (Required):</label>
                 <input 
@@ -56,13 +59,13 @@
                     placeholder="Example: 2025">
             </div>
         </div>
-
+        <!--submit to show section list and eval status-->
         <button type="submit" class="btn btn-primary">See Sections and Status</button>
     </form>
 </div>
 
 <style>
-    /* Styling for inline elements */
+    
     .form-group-inline {
         display: flex;
         gap: 20px;

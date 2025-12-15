@@ -4,18 +4,19 @@
 
 {% block content %}
 <div class="container-full">
+    <!--show term and year and degree and instructor-->
     <h2>Evaluations for {{ context.sec_term }} {{ context.sec_year }}</h2>
     <h3>{{ context.degree_name }} ({{ context.degree_level }}) – Instructor: {{ context.instructor_id }}</h3>
     
     <hr>
-    
+    <!--post all eval inputs-->
     <form method="POST" action="{{ url_for('evaluation.save_evaluation') }}">
         
         <input type="hidden" name="degree_name" value="{{ context.degree_name }}">
         <input type="hidden" name="degree_level" value="{{ context.degree_level }}">
         <input type="hidden" name="sec_term" value="{{ context.sec_term }}">
         <input type="hidden" name="sec_year" value="{{ context.sec_year }}">
-        
+        <!--only render if bcakend give section data, loop through each section and obj list-->
         {% if sections_data %}
             
             {% for section_item in sections_data %}
@@ -31,7 +32,7 @@
                         </h4>
                         <p>Students in class: {{ section.num_students }}</p>
                     </div>
-
+                    <!--obj is when course is linked to obj for degree-->
                     {% if objectives %}
                         <div class="objectives-list">
                             {% for obj in objectives %}
@@ -40,7 +41,7 @@
                                 <h5>
                                     &#10003; {{ obj.obj_code }} - {{ obj.title }}
                                 </h5>
-                                
+                                <!--warning if obj missing eval info-->
                                 {% if obj.status == 'Missing' %}
                                     <p class="missing-warning">You still need to enter evaluation info for this objective.</p>
                                 {% endif %}
@@ -49,6 +50,7 @@
 
                                 <div class="form-row">
                                     <div class="form-group-half">
+                                        <!--what assessment used for; exam, lab, etc-->
                                         <label for="{{ prefix }}based_on">What is this based on?</label>
                                         <input type="text" 
                                             name="{{ prefix }}based_on" 
@@ -68,7 +70,7 @@
                                 
                                 <div class="form-row grades">
                                     <label>How many students hit each level? (Max: {{ section.num_students }})</label>
-                                    
+                                    <!--keeps grade count below number of students-->
                                     <div class="grade-input">
                                         <label for="{{ prefix }}perform_a">A:</label>
                                         <input type="number"
@@ -101,7 +103,7 @@
                                             min="0">
                                     </div>
                                 </div>
-
+                                <!--improvements suggestions box-->
                                 <div class="form-group">
                                     <label for="{{ prefix }}improvements">Any ideas to improve this course? (Optional)</label>
                                     <textarea name="{{ prefix }}improvements"
@@ -131,7 +133,7 @@
 </div>
 
 <style>
-    /* Main container */
+    
     .container-full {
         width: 90%;
         max-width: 1200px;
@@ -142,7 +144,6 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* Each section/course block */
     .section-block {
         margin-bottom: 40px;
         padding: 15px;
@@ -164,18 +165,18 @@
         align-items: center;
     }
 
-    /* Status tags */
     .status-tag {
         font-size: 0.9em;
         padding: 4px 8px;
         border-radius: 4px;
         font-weight: bold;
     }
+    /*status colors*/
     .fully-entered .status-tag { background-color: #d4edda; color: #155724; }
     .partially-entered .status-tag { background-color: #fff3cd; color: #856404; }
     .not-entered .status-tag { background-color: #f8d7da; color: #721c24; }
 
-    /* Objectives */
+    /*objectives*/
     .objective-entry {
         border: 1px solid #eee;
         padding: 15px;
@@ -192,7 +193,7 @@
         font-weight: bold;
     }
 
-    /* Form layout */
+    /* layout*/
     .form-row {
         display: flex;
         gap: 20px;
@@ -204,7 +205,7 @@
         flex: 1; 
     }
 
-    /* Grade inputs */
+    /*grades*/
     .grades {
         justify-content: space-around;
         align-items: center;

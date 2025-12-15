@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from database.handler import execute_query
-
+#blueprint for query and reporting pages
 querying_bp = Blueprint('querying', __name__, url_prefix='/query', template_folder='../templates')
 
 
@@ -18,6 +18,7 @@ def query_degree_details():
       - list all learning objectives
       - show which courses are linked to which objectives
     """
+    #deg dropdown options
     degrees = execute_query(
         "SELECT degree_name, degree_level FROM degree ORDER BY degree_name"
     )
@@ -25,9 +26,10 @@ def query_degree_details():
 
     if request.method == 'POST':
         try:
+            #get degree
             degree_combined = request.form['degree_select']
             degree_name, degree_level = degree_combined.split('|')
-
+            #courses required by deg
             courses_query = """
                 SELECT R.course_num, C.course_name, R.core
                 FROM requires R
@@ -37,7 +39,7 @@ def query_degree_details():
                 ORDER BY R.core DESC, R.course_num
             """
             courses = execute_query(courses_query, (degree_name, degree_level))
-
+            #objectives linked to deg
             objectives_query = """
                 SELECT L.obj_code, L.title, L.description
                 FROM learning_objective L
@@ -48,7 +50,7 @@ def query_degree_details():
                 ORDER BY L.obj_code
             """
             objectives = execute_query(objectives_query, (degree_name, degree_level))
-
+            #objective to course links for deg
             associated_query = """
                 SELECT A.obj_code, A.course_num
                 FROM associated A
@@ -78,6 +80,7 @@ def query_degree_sections():
       - list all sections of courses required by that degree,
         ordered by year and term. [cite: 60]
     """
+    #deg dropdown options
     degrees = execute_query(
         "SELECT degree_name, degree_level FROM degree ORDER BY degree_name"
     )
@@ -85,11 +88,12 @@ def query_degree_sections():
 
     if request.method == 'POST':
         try:
+            #read form data
             degree_combined = request.form['degree_select']
             degree_name, degree_level = degree_combined.split('|')
             start_year = request.form['start_year']
             end_year = request.form['end_year']
-
+            #query sections for deg in year range
             sections_query = """
                 SELECT S.course_num, C.course_name, S.sec_num,
                        S.sec_term, S.sec_year, R.core
@@ -122,6 +126,7 @@ def query_course_sections():
     For a chosen course and year range:
       - list all sections of that course, with instructor and enrollment. [cite: 65]
     """
+    #course dropdown options
     courses = execute_query(
         "SELECT course_num, course_name FROM course ORDER BY course_num"
     )
@@ -129,10 +134,11 @@ def query_course_sections():
 
     if request.method == 'POST':
         try:
+            #read inputs from form
             course_num = request.form['course_select']
             start_year = request.form['start_year']
             end_year = request.form['end_year']
-
+            #query sections for course
             sections_query = """
                 SELECT S.sec_num, S.sec_term, S.sec_year,
                        S.num_students, I.instructor_name
@@ -167,6 +173,7 @@ def query_instructor_sections():
     For a chosen instructor and year range:
       - list all sections they have taught. [cite: 68]
     """
+    #instructor dropdown options
     instructors = execute_query(
         "SELECT instructor_id, instructor_name FROM instructor ORDER BY instructor_name"
     )
@@ -174,10 +181,11 @@ def query_instructor_sections():
 
     if request.method == 'POST':
         try:
+            #read inputs from form
             instructor_id = request.form['instructor_select']
             start_year = request.form['start_year']
             end_year = request.form['end_year']
-
+            #query sections for instructor
             sections_query = """
                 SELECT T.course_num, C.course_name,
                        T.sec_num, T.sec_term, T.sec_year
@@ -224,9 +232,10 @@ def query_evaluation_status():
 
     if request.method == 'POST':
         try:
+            #read term and yr from form
             sec_term = request.form['sec_term']
             sec_year = request.form['sec_year']
-
+            #query sections for term and yr
             sections_query = """
                 SELECT
                     S.course_num, S.sec_num, S.sec_term, S.sec_year,
@@ -251,7 +260,7 @@ def query_evaluation_status():
 
             for section in sections:
                 course_num = section['course_num']
-
+            #query total expected evals for core objectives
                 total_expected_evals_query = """
                     SELECT
                         R.degree_name,
@@ -278,7 +287,7 @@ def query_evaluation_status():
                     degree_name = expected['degree_name']
                     degree_level = expected['degree_level']
                     total_objs = expected['total_objs']
-
+                    #query entered evals for this section and deg
                     entered_evals_query = """
                         SELECT
                             COUNT(*) AS entered_count,
@@ -304,7 +313,7 @@ def query_evaluation_status():
 
                     entered_count = eval_counts['entered_count']
                     improve_count = eval_counts['improve_count']
-
+                    #status label
                     status = 'Not Entered'
                     if total_objs > 0:
                         if entered_count == total_objs:
@@ -344,10 +353,11 @@ def query_grade_percentage():
 
     if request.method == 'POST':
         try:
+            #imputs from form
             sec_term = request.form['sec_term']
             sec_year = request.form['sec_year']
             percentage = float(request.form['percentage']) / 100.0
-
+            #query objective evals meeting threshold
             grade_query = """
                 SELECT
                     OE.course_num,
