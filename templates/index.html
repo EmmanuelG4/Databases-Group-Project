@@ -4,6 +4,7 @@
 
 {% block content %}
 <div class="container">
+    <!-- establishes the heading and description for the home page of the project -->
     <h2>Welcome to our CS 5330 Program Evaluation Project</h2>
     
     <p>
@@ -13,6 +14,7 @@
     
     <div class="circle-menu">
         
+        <!-- sets up the card/appearance for the Data Entry & Setup section -->
         <section class="circle-card">
             <h3>Data Entry & Setup</h3>
             <p>
@@ -24,6 +26,7 @@
             </a>
         </section>
 
+        <!-- sets up the card/appearance for the Evaluation Submission section -->
         <section class="circle-card">
             <h3>Evaluation Submission</h3>
             <p>
@@ -34,6 +37,7 @@
             </a>
         </section>
 
+        <!-- sets up the card/appearance for the Querying section -->
         <section class="circle-card">
             <h3>Querying</h3>
             <p>
@@ -48,7 +52,7 @@
 </div>
 
 <style>
-/* Center the menu */
+/* centers the project's menu */
 .circle-menu {
     display: flex;
     justify-content: center;
@@ -58,14 +62,14 @@
     flex-wrap: wrap;
 }
 
-/* Circle card styling */
+/* adds circular card styling and changes the color of the border and text to red */
 .circle-card {
     width: 260px;
     height: 260px;
     border-radius: 50%;
     background: #ffffff;
-    border: 3px solid #cc0033; /* red border */
-    color: #cc0033; /* red text */
+    border: 3px solid #cc0033; 
+    color: #cc0033; 
     padding: 24px;
 
     display: flex;
@@ -78,20 +82,20 @@
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-/* Hover effect */
+/* adds an effect when hovering over a card */
 .circle-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 22px rgba(0,0,0,0.2);
 }
 
-/* Titles */
+/* adds styling to the titles of the cards */
 .circle-card h3 {
     margin: 0;
     font-size: 18px;
     font-weight: 700;
 }
 
-/* Description text */
+/* adds styling to the text of the descriptions */
 .circle-card p {
     font-size: 13px;
     margin-top: 10px;
@@ -99,12 +103,12 @@
     line-height: 1.35;
 }
 
-/* Link button */
+/* adds styling to the link buttons and changes their color to blue */
 .circle-link {
     font-weight: 700;
     font-size: 14px;
     text-decoration: none;
-    color: #003366; /* blue */
+    color: #003366; 
 }
 
 .circle-link:hover {

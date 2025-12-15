@@ -2,10 +2,10 @@ body {
     margin: 0;
     padding: 0;
     font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-    color: #cc0033; /* ALL TEXT RED */
+    color: #cc0033; /* sets all text to the color red */
     position: relative;
     
-    /* Background image */
+    /* sets campus-beauty as the background image of the frontend */
     background-image: url('/static/images/campus-beauty.jpg');
     background-size: cover;
     background-position: center;
@@ -13,7 +13,7 @@ body {
     background-attachment: fixed;
 }
 
-/* Semi-transparent overlay */
+/* Puts a blue semi-transparent overlay on top of the background image to make text more readable */
 body::before {
     content: '';
     position: fixed;
@@ -21,9 +21,9 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(188, 208, 232, 0.85); /* Blue with 85% opacity */
+    background-color: rgba(188, 208, 232, 0.85); 
     z-index: -1;
-    pointer-events: none; /* Allows clicking through the overlay */
+    pointer-events: none; 
 }
 
 main {
@@ -35,8 +35,7 @@ main {
     margin: 0 auto;
 }
 
-/* NAVBAR */
-
+/* styles the navbar */
 .navbar {
     background: linear-gradient(90deg, #003366, #cc0033);
     color: white;
@@ -72,8 +71,7 @@ main {
     text-decoration: underline;
 }
 
-/* HEADINGS */
-
+/* styles the headings by setting their font size and changing their color to red */
 h1, h2, h3 {
     color: #cc0033; 
     margin-top: 0;
@@ -90,8 +88,7 @@ h2 {
     margin-bottom: 8px;
 }
 
-/* FORMS */
-
+/* adds styling to forms */
 form {
     background: #ffffff;
     padding: 24px;
@@ -118,7 +115,7 @@ form select {
     border-radius: 6px;
     border: 1px solid #cbd5e1;
     font-size: 14px;
-    color: #cc0033; /* INPUT TEXT RED */
+    color: #cc0033; 
     box-sizing: border-box;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -132,8 +129,7 @@ form select:focus {
     box-shadow: 0 0 0 3px rgba(204, 0, 51, 0.2);
 }
 
-/* BUTTONS */
-
+/* styles buttons so they have animations for clicks and are round-shaped */
 form button,
 .button {
     background-color: #cc0033;
@@ -165,13 +161,12 @@ form button:active,
     box-shadow: none;
 }
 
-/* FLASH MESSAGES */
-
+/* styles flashes so that they have red text and a rounded shape */
 .flashes {
     list-style: none;
     padding: 0;
     margin-bottom: 20px;
-    color: #cc0033; /* TEXT RED */
+    color: #cc0033; 
 }
 
 .flashes li {
@@ -182,8 +177,7 @@ form button:active,
     border: 1px solid transparent;
 }
 
-/* TABLES */
-
+/* adds styling to the tables */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -192,7 +186,7 @@ table {
     box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
     border-radius: 10px;
     overflow: hidden;
-    color: #cc0033; /* TABLE TEXT RED */
+    color: #cc0033;
 }
 
 table th {
@@ -209,7 +203,7 @@ table td {
     padding: 10px;
     border-bottom: 1px solid #e5e7eb;
     font-size: 14px;
-    color: #cc0033; /* CELL TEXT RED */
+    color: #cc0033; 
 }
 
 table tr:nth-child(even) {
@@ -220,7 +214,7 @@ table tr:hover {
     background-color: #e5ecff;
 }
 
-/* STATUS TEXT */
+/* changes the color of the status text to red */
 
 .status-full {
     color: #cc0033;  
@@ -237,20 +231,18 @@ table tr:hover {
     font-weight: 700;
 }
 
-/* FOOTER (if you add one later) */
-
+/* styles the footer */
 footer {
     background-color: #003366;
     text-align: center;
-    color: #cc0033; /* FOOTER TEXT RED */
+    color: #cc0033; 
     padding: 16px 10px;
     margin-top: 40px;
     font-size: 13px;
     box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
 }
 
-/* DROPDOWN NAVIGATION */
-
+/* styles the dropdown menu */
 .nav-links {
     position: relative;
 }
@@ -277,7 +269,7 @@ footer {
     position: absolute;
     right: 0;
     top: 110%;
-    background-color: #ffffff !important; /* FULLY OPAQUE */
+    background-color: #ffffff !important; 
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
     padding: 8px 0;
@@ -291,16 +283,16 @@ footer {
     padding: 10px 16px;
     font-size: 15px;
     text-decoration: none;
-    color: #003366 !important; /* FORCE DARK NAVY */
+    color: #003366 !important; 
     font-weight: 700;
 }
 
 .dropdown-menu a:hover {
     background-color: #f0f3ff;
-    color: #001a33 !important; /* EVEN DARKER ON HOVER */
+    color: #001a33 !important; 
 }
 
-/* Show dropdown on hover or focus */
+/* allows the dropdown menu to be seen when hovering over it */
 .dropdown:hover .dropdown-menu,
 .dropdown:focus-within .dropdown-menu {
     display: block;

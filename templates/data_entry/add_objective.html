@@ -4,11 +4,12 @@
 
 {% block content %}
 <div class="container">
+     <!-- Main container used to keep spacing consistent -->
     <h2>Add a New Learning Objective</h2>
     <p>Fill out the details below to add a new objective to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_objective') }}">
-        
+        <!-- Sends learning objective data to the add_objective route -->
         <div class="form-group">
             <label for="obj_code">Objective Code (Required):</label>
             <input 
