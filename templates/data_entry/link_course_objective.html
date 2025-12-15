@@ -17,11 +17,13 @@
             <select id="degree_select" name="degree_select_combined" required>
                 <option value="">-- Select Degree --</option>
                 {% for degree in degrees %}
+                 <!-- Degree options are generated from existing degree records -->
                 <option value="{{ degree.degree_name }}|{{ degree.degree_level }}">
                     {{ degree.degree_name }} ({{ degree.degree_level }})
                 </option>
                 {% endfor %}
             </select>
+            <!-- Hidden inputs store the degree name and level separately -->
             <input type="hidden" id="degree_name_hidden" name="degree_name" required>
             <input type="hidden" id="degree_level_hidden" name="degree_level" required>
             <small>This link applies only within the degree you pick here.</small>
@@ -32,6 +34,7 @@
             <select id="course_select" name="course_num" required>
                 <option value="">-- Select Course --</option>
                 {% for course in courses %}
+                  <!-- Courses shown here are limited to the selected degree -->
                 <option value="{{ course.course_num }}">
                     {{ course.course_num }} - {{ course.course_name }}
                 </option>
@@ -58,6 +61,7 @@
 </div>
 
 <script>
+    // Reads the combined degree value and splits it into name and level
     const degreeSelect = document.getElementById('degree_select');
     const degreeNameHidden = document.getElementById('degree_name_hidden');
     const degreeLevelHidden = document.getElementById('degree_level_hidden');
@@ -73,7 +77,7 @@
             degreeLevelHidden.value = '';
         }
     });
-
+   // Triggers the change logic so hidden fields stay in sync on page load
     degreeSelect.dispatchEvent(new Event('change'));
 </script>
 {% endblock %}

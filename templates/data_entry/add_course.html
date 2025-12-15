@@ -1,14 +1,17 @@
 {% extends "layout.html" %}
 
+<!-- Uses the base layout for consistent styling and navigation -->
+
 {% block title %}Add Course{% endblock %}
 
 {% block content %}
 <div class="container">
+     <!-- Container keeps the form centered and consistent with other pages -->
     <h2>Add a New Course</h2>
     <p>Fill out the info below to add a course to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_course') }}">
-        
+        <!-- Form submits course data to the add_course route -->
         <div class="form-group">
             <label for="course_num">Course Number (Required):</label>
             <input 
@@ -34,6 +37,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Add Course</button>
+        <!-- Submits the form -->
     </form>
 </div>
 {% endblock %}

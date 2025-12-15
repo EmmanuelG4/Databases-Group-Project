@@ -4,11 +4,14 @@
 
 {% block content %}
 <div class="container">
+     <!-- Wraps the page content for consistent spacing and alignment -->
+
     <h2>Add a New Degree</h2>
     <p>Fill in the info below to add a degree to the system.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_degree') }}">
-        
+       <!-- Sends the degree data to the add_degree route -->
+          
         <div class="form-group">
             <label for="degree_name">Degree Name:</label>
             <input 
@@ -35,6 +38,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Add Degree</button>
+        <!-- Submits the form -->
     </form>
 </div>
 {% endblock %}

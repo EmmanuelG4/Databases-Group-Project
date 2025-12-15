@@ -4,16 +4,19 @@
 
 {% block content %}
 <div class="container">
+     <!-- Container keeps the form centered and readable -->
     <h2>Add a Course Section</h2>
     <p>Use this form to enter a specific course section for a semester and assign who’s teaching it.</p>
     
     <form method="POST" action="{{ url_for('data_entry.add_section') }}">
-        
+         <!-- Sends section and instructor data to the add_section route -->
+
         <div class="form-group">
             <label for="course_select">Select Course (Required):</label>
             <select id="course_select" name="course_num" required>
                 <option value="">-- Select Course --</option>
                 {% for course in courses %}
+                  <!-- Course list is populated dynamically from existing courses -->
                 <option value="{{ course.course_num }}">{{ course.course_num }} - {{ course.course_name }}</option>
                 {% endfor %}
             </select>
@@ -33,6 +36,7 @@
         </div>
 
         <div class="form-group-inline">
+            <!-- Groups term and year together on the same row -->
             <div class="form-group">
                 <label for="sec_term">Semester Term (Required):</label>
                 <select id="sec_term" name="sec_term" required>

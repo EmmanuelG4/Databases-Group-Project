@@ -4,11 +4,12 @@
 
 {% block content %}
 <div class="container">
+     <!-- Main wrapper for the data entry menu page -->
     <h2>Data Entry Menu</h2>
     <p>Pick what you want to add or update in the system.</p>
     
     <div class="menu-list">
-
+      <!-- Flex container that holds the three menu sections -->
         <!-- Circle 1 -->
         <section class="circle-card">
             <h3>Basic Info</h3>
@@ -23,6 +24,7 @@
 
         <!-- Circle 2 -->
         <section class="circle-card">
+              <!-- Focuses on linking courses to other entities in the system -->
             <h3>Courses & Connections</h3>
             <p>Set up how courses relate to degrees and record when a class is offered.</p>
             <ul>
@@ -34,6 +36,7 @@
 
         <!-- Circle 3 -->
         <section class="circle-card">
+             <!-- Entry point for submitting evaluation data -->
             <h3>Evaluations</h3>
             <p>Enter the A/B/C/F counts and improvement notes for each objective.</p>
             <a href="{{ url_for('evaluation.select_evaluation') }}" class="btn btn-primary">Go to Evaluation Page</a>
@@ -42,12 +45,12 @@
 </div>
 
 <style>
-/* ----- Page background: same darker blue ----- */
+/*  Page background: same darker blue  */
 body {
     background-color: #c9d9f0 !important;  /* darker light blue */
 }
 
-/* ---------- Layout ---------- */
+/*  Layout */
 .menu-list {
     display: flex;
     justify-content: center;
